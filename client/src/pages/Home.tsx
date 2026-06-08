@@ -1,8 +1,10 @@
+import Navbar from "../components/Navbar";
+
 export default function Home() {
 
     return (
         <>
-            <h1>Ola mundo</h1>
+            <Navbar isAdmin={false} />
         </>
     )
 }
