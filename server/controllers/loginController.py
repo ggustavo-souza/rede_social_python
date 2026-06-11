@@ -1,7 +1,7 @@
 from models.user import UserRegisterModel, UserLoginModel
 from services.senhaServices import encriptarSenha, verificarSenha
 from sqlalchemy.orm import Session
-from database import BD, User
+from database import User
 from fastapi import HTTPException
 
 def handleLogin(request: UserLoginModel, session: Session):

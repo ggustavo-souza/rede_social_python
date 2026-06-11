@@ -16,7 +16,7 @@ class User(Base):
 
 class BD: 
     bd = create_engine("sqlite:///banco.db", echo=False)
-    SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=bd)
+    SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=bd) #variavel pra criar a sessão
     
     @classmethod
     def createBD(cls):
@@ -27,11 +27,11 @@ class BD:
         return cls.bd
 
 def get_db():
-    db = BD.SessionLocal()
+    db = BD.SessionLocal() #pega a sessão e joga na variável db
     try:
-        yield db
+        yield db #joga a sessão pra quem chamou a função porém sem finalizar a função
     finally:
-        db.close()
+        db.close() #finaliza a função
 
 
 
