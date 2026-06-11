@@ -1,11 +1,9 @@
 import bcrypt
 
-def encriptarSenha(senha):
-    hashSenha = bcrypt.hashpw(senha, bcrypt.gensalt())
-    return hashSenha
+def encriptarSenha(senha: str):
+    hash_bytes = bcrypt.hashpw(senha.encode('utf-8'), bcrypt.gensalt())
+    return hash_bytes.decode('utf-8')
 
-def verificarSenha(senha, senhaBanco):
-    if(bcrypt.checkpw(senha, senhaBanco)):
-        return True
-    return False    
+def verificarSenha(senha: str, senhaBanco: str):
+    return bcrypt.checkpw(senha.encode('utf-8'), senhaBanco.encode('utf-8')) 
 
