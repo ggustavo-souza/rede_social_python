@@ -1,1 +1,33 @@
+@import url('https://fonts.googleapis.com/css2?family=Stack+Sans+Headline:wght@200..700&display=swap');
 @import "tailwindcss";
+
+:root {
+    --color-primary: #FFFAF0;
+    --color-secondary: #E03F4F;
+    --color-tertiary: #81912F;
+    --color-placeholder: #B0B0B0;
+}
+
+* {
+    font-family: 'Stack Sans Headline', sans-serif;
+    font-style: normal;
+    box-sizing: border-box;
+}
+
+body {
+    background-color: var(--color-primary);
+}
+
+input::placeholder {
+    color: var(--color-placeholder)
+}
+
+.animationBotao:hover {
+    transform: scale(1.03);
+    transition: all 0.1s ease-out;
+    filter: brightness(0.90)
+}
+
+.animationBotao {
+    transition: all 0.1s ease-out;
+}
