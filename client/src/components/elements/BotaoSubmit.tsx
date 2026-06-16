@@ -13,7 +13,7 @@ export default function Botao({ texto, type, destino, tamanho }: BotaoProps) {
     return (
         <button
             type={type}
-            className={`animationBotao px-6 font-semibold py-2 bg-[var(--color-secondary)] text-[var(--color-primary)] text-${tamanho} w-1/2 rounded-sm cursor-pointer`}
+            className={`animationBotao px-6 font-semibold py-2 bg-[var(--color-secondary)] text-[var(--color-primary)] text-${tamanho} w-${tamanho} rounded-sm cursor-pointer`}
             onClick={() => { (destino !== "" && type == "button") ? (navigate(destino)) : null }}
         >
             {texto}
