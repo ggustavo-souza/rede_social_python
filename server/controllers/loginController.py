@@ -5,7 +5,7 @@ from database import User
 from fastapi import HTTPException
 
 def handleLogin(request: UserLoginModel, session: Session):
-    usuarioBanco = session.query(User).where(User.nome == request.nome).first()
+    usuarioBanco = session.query(User).where(User.email == request.email).first()
     if usuarioBanco is not None:
         senhaBanco = usuarioBanco.senha
         if(verificarSenha(request.senha, senhaBanco)): 
