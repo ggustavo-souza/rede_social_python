@@ -1,11 +1,11 @@
 import Botao from "../components/elements/BotaoSubmit"
-import LoginRegisterForm from "../components/ui/LoginRegisterForm"
+import LoginForm from "../components/ui/LoginForm"
 
 export default function LoginPage() {
     return (
         <>
             <main className="flex flex-row border-3 min-h-screen">
-                <LoginRegisterForm type="Login" />
+                <LoginForm />
                 <aside className="bg-[var(--color-tertiary)] flex flex-col min-h-screen p-10 py-5">
                     <img className="mx-auto" src="/image.png" height="70" width="70"></img>
                     <header className="text-[var(--color-primary)] font-semibold text-3xl text-center my-5">
