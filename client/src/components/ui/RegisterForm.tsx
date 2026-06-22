@@ -36,6 +36,7 @@ export default function RegisterForm() {
 
     return (
         <>
+            {/* TODO: Estilizar as páginas com tailwind */}
             <header>
                 <h1>Realize seu registro!</h1>
             </header>
