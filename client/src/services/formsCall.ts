@@ -21,11 +21,17 @@ export async function loginCall(dadosLogin: LoginFormData) {
 
 export async function registerCall(dadosRegistro: RegistrarFormData) {
     const urlAPI = "http://localhost:8000"
+    const { email, nome, senha } = dadosRegistro
+    const dadosParaEnvio = {
+        email: email,
+        nome: nome,
+        senha: senha
+    }
 
     try {
         const response = await fetch(`${urlAPI}/register`, {
             method: "POST",
-            body: JSON.stringify(dadosRegistro),
+            body: JSON.stringify(dadosParaEnvio),
             headers: {
                 "Content-Type": "application/json"
             }
