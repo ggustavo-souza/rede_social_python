@@ -3,6 +3,7 @@
 /server/venv
 /server/__pycache__
 */*/__pycache__
+/server/*.db
 
 /client/logs
 /client/*.log
