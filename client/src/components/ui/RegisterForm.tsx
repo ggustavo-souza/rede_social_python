@@ -22,13 +22,14 @@ export default function RegisterForm() {
             ...prevData,
             [name]: value,
         }));
-        {/* TODO: Corrigir o funcionamento da confirmação de senha */ }
-        if (registerData.senha !== registerData.confirmarSenha)
-            setAlertForm(false)
-        else if (registerData.senha === registerData.confirmarSenha)
-            setAlertForm(true)
-        else
-            setAlertForm(true)
+
+        if (name === "confirmarSenha") {
+            setAlertForm(value !== registerData.senha);
+        } else if (name === "senha") {
+            if (registerData.confirmarSenha.length > 0) {
+                setAlertForm(value !== registerData.confirmarSenha);
+            }
+        }
     }
 
     const nextStep = () => {
