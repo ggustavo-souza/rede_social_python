@@ -6,15 +6,16 @@ interface BotaoProps {
     destino?: string
     type: "button" | "submit"
     funcao?: () => void;
+    estilo?: "solid" | "inative"
 }
 
-export default function Botao({ texto, type, destino, tamanho, funcao }: BotaoProps) {
+export default function Botao({ texto, type, destino, tamanho, funcao, estilo }: BotaoProps) {
     const navigate = useNavigate();
 
     return (
         <button
             type={type}
-            className={`animationBotao px-6 font-semibold py-2 bg-[var(--color-secondary)] text-[var(--color-primary)] text-${tamanho} w-${tamanho} rounded-sm cursor-pointer`}
+            className={`${estilo === "inative" ? ("bg-gray-400") : ("animationBotao bg-[var(--color-secondary)] text-[var(--color-primary)]")} px-6 font-semibold py-2 text-${tamanho} w-${tamanho} rounded-sm cursor-pointer`}
             onClick={() => {
                 if (destino && type === "button") {
                     navigate(destino);
