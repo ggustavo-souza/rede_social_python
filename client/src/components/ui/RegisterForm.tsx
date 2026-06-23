@@ -29,6 +29,8 @@ export default function RegisterForm() {
             if (registerData.confirmarSenha.length > 0) {
                 setAlertForm(value !== registerData.confirmarSenha);
             }
+        } else if (name === "email") {
+            setAlertForm(value.length === 0)
         }
     }
 
@@ -56,6 +58,7 @@ export default function RegisterForm() {
                     {step === 0 && (
                         <div className="flex flex-col gap-2 w-1/3">
                             <label htmlFor="email" className="font-semibold">Email</label>
+                            {registerData.email.length === 0 && (<p className="text-red-600 text-sm">Forneça um email!</p>)}
                             <input
                                 type="email"
                                 id="email"
@@ -63,7 +66,8 @@ export default function RegisterForm() {
                                 value={registerData.email}
                                 onChange={handleChange}
                                 placeholder="Digite seu email"
-                                className="ring-2 active:ring-3 focus:outline-[var(--color-tertiary)] ring-gray-300 my-2 p-3 rounded-sm"
+                                className={`${registerData.email.length === 0 ? ("outline-red-600 ring-3 ring-red-600") : ("ring-2 active:ring-3 focus:outline-[var(--color-tertiary)]")} ring-gray-300 my-2 p-3 rounded-sm`}
+                                maxLength={50}
                                 required
                             />
                         </div>
@@ -71,6 +75,7 @@ export default function RegisterForm() {
                     {step === 1 && (
                         <div className="flex flex-col gap-2 w-1/3">
                             <label htmlFor="nome" className="font-semibold">Nome de usuário</label>
+                            {registerData.nome.length === 0 && (<p className="text-red-600 text-sm">Forneça um nome!</p>)}
                             <input
                                 type="text"
                                 id="nome"
@@ -78,7 +83,8 @@ export default function RegisterForm() {
                                 value={registerData.nome}
                                 onChange={handleChange}
                                 placeholder="Digite seu nome de usuário"
-                                className="ring-2 active:ring-3 focus:outline-[var(--color-tertiary)] ring-gray-300 my-2 p-3 rounded-sm"
+                                className={`${registerData.nome.length === 0 ? ("outline-red-600 ring-3 ring-red-600") : ("ring-2 active:ring-3 focus:outline-[var(--color-tertiary)]")} ring-gray-300 my-2 p-3 rounded-sm`}
+                                maxLength={20}
                                 required
                             />
                         </div>
@@ -93,7 +99,7 @@ export default function RegisterForm() {
                                 value={registerData.senha}
                                 onChange={handleChange}
                                 placeholder="Crie uma senha"
-                                className="ring-2 active:ring-3 focus:outline-[var(--color-tertiary)] ring-gray-300 my-2 p-3 rounded-sm"
+                                className={`ring-2 active:ring-3 focus:outline-[var(--color-tertiary)] ring-gray-300 my-2 p-3 rounded-sm`}
                                 required
                             />
                             <label htmlFor="confirmarSenha" className="font-semibold">Confirmar Senha</label>
@@ -111,7 +117,7 @@ export default function RegisterForm() {
                         </div>
                     )}
                     {step === 3 && (
-                        <div className="flex flex-col gap-4 bg-gray-50 p-4 rounded border w-1/3">
+                        <div className="flex flex-col gap-4 p-8 rounded ring-2 ring-gray-300 w-1/2">
                             <h3 className="font-semibold text-lg">Confirme suas informações:</h3>
                             <div>
                                 <p className="text-sm text-gray-500">Email</p>
@@ -128,7 +134,12 @@ export default function RegisterForm() {
                         <>
                             <div className="flex gap-10 mt-4 justify-between">
                                 <Botao texto="Voltar" tamanho="md" type="button" funcao={prevStep} />
-                                <Botao texto="Próximo" tamanho="md" type="button" funcao={nextStep} />
+                                {alertForm || registerData.email.length === 0 || registerData.nome.length === 0 ? (
+                                    <Botao texto="Próximo" tamanho="md" type="button" estilo="inative" />
+                                ) : (
+                                    <Botao texto="Próximo" tamanho="md" type="button" funcao={nextStep} />
+                                )}
+
                             </div>
                         </>
                     ) : (
@@ -138,7 +149,11 @@ export default function RegisterForm() {
                                 {step == 3 ? (
                                     <Botao texto="Registrar" tamanho="md" type="submit" />
                                 ) : (
-                                    <Botao texto="Próximo" tamanho="md" type="button" funcao={nextStep} />
+                                    alertForm ? (
+                                        <Botao texto="Próximo" tamanho="md" type="button" estilo="inative" />
+                                    ) : (
+                                        <Botao texto="Próximo" tamanho="md" type="button" funcao={nextStep} />
+                                    )
                                 )}
                             </div>
                         </>
