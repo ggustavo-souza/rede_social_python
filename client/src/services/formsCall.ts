@@ -29,7 +29,7 @@ export async function registerCall(dadosRegistro: RegistrarFormData) {
     }
 
     try {
-        const response = await fetch(`${urlAPI}/register`, {
+        const response = await fetch(`${urlAPI}/registrar`, {
             method: "POST",
             body: JSON.stringify(dadosParaEnvio),
             headers: {
