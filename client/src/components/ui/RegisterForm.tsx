@@ -132,34 +132,49 @@ export default function RegisterForm() {
 
                     {step > 0 && step < 3 ? (
                         <>
-                            <div className="flex gap-10 mt-4 justify-between">
-                                <Botao texto="Voltar" tamanho="md" type="button" funcao={prevStep} />
-                                {alertForm || registerData.email.length === 0 || registerData.nome.length === 0 ? (
-                                    <Botao texto="Próximo" tamanho="md" type="button" estilo="inative" />
-                                ) : (
-                                    <Botao texto="Próximo" tamanho="md" type="button" funcao={nextStep} />
-                                )}
+                            {step === 2 ? (
+                                <div className="flex gap-10 mt-4 justify-between">
+                                    <Botao texto="Voltar" tamanho="md" type="button" funcao={prevStep} />
+                                    {alertForm || registerData.confirmarSenha.length === 0 ? (
+                                        <Botao texto="Próximo" tamanho="md" type="button" estilo="inative" />
+                                    ) : (
+                                        <Botao texto="Próximo" tamanho="md" type="button" funcao={nextStep} />
+                                    )}
+                                </div>
+                            ) : (
+                                <div className="flex gap-10 mt-4 justify-between">
+                                    <Botao texto="Voltar" tamanho="md" type="button" funcao={prevStep} />
+                                    {alertForm || registerData.email.length === 0 || registerData.nome.length === 0 ? (
+                                        <Botao texto="Próximo" tamanho="md" type="button" estilo="inative" />
+                                    ) : (
+                                        <Botao texto="Próximo" tamanho="md" type="button" funcao={nextStep} />
+                                    )}
+                                </div>
+                            )}
 
-                            </div>
                         </>
                     ) : (
                         <>
                             <div className="flex gap-10 mt-4 justify-between">
-                                <Botao texto="Voltar" tamanho="md" type="button" funcao={prevStep} />
                                 {step == 3 ? (
-                                    <Botao texto="Registrar" tamanho="md" type="submit" />
+                                    <>
+                                        <Botao texto="Voltar" tamanho="md" type="button" funcao={prevStep} />
+                                        <Botao texto="Registrar" tamanho="md" type="submit" />
+                                    </>
                                 ) : (
-                                    alertForm ? (
-                                        <Botao texto="Próximo" tamanho="md" type="button" estilo="inative" />
-                                    ) : (
-                                        <Botao texto="Próximo" tamanho="md" type="button" funcao={nextStep} />
-                                    )
+                                    <>
+                                        <Botao texto="Voltar" tamanho="md" type="button" destino="/login" />
+                                        {alertForm || registerData.email.length === 0 ? (
+                                            <Botao texto="Próximo" tamanho="md" type="button" estilo="inative" />
+                                        ) : (
+                                            <Botao texto="Próximo" tamanho="md" type="button" funcao={nextStep} />
+                                        )}
+                                    </>
                                 )}
                             </div>
                         </>
                     )}
                 </form>
-                {/*TODO: Implementar a imagem da logo */}
             </section>
         </>
     )
