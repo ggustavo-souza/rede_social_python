@@ -2,16 +2,20 @@ import { useState, type ChangeEvent } from "react";
 import Botao from "../elements/BotaoSubmit"
 import { type LoginFormData } from "../../types/FormTypes";
 import { loginCall } from "../../services/formsCall";
+import Modal from "../elements/Modal";
 
 export default function LoginForm() {
     const [loginData, setLoginData] = useState<LoginFormData>({
         email: "",
         senha: ""
     })
+    const [modal, setModal] = useState({ abrir: false, erro: false })
 
-    const handleSubmit = (event: React.SubmitEvent<HTMLFormElement>) => {
+    const handleSubmit = async (event: React.SubmitEvent<HTMLFormElement>) => {
         event.preventDefault();
-        loginCall(loginData)
+        const success = await loginCall(loginData);
+
+        success ? (setModal({ abrir: true, erro: false })) : (setModal({ abrir: true, erro: true }))
     }
 
     const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
@@ -42,6 +46,12 @@ export default function LoginForm() {
                     </div>
                 </form>
             </section>
+            {(modal.abrir === true && modal.erro === true) && (
+                <Modal titulo="Houve um erro no login!" texto="Tente novamente mais tarde!" tema="negative" funcaoFechar={() => setModal({ abrir: false, erro: false })} />
+            )}
+            {(modal.abrir === true && modal.erro === false) && (
+                <Modal titulo="Login efetuado com sucesso!" texto="Clique para continuar" tema="positive" destino="home" />
+            )}
         </>
     )
 }

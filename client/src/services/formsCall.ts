@@ -12,10 +12,18 @@ export async function loginCall(dadosLogin: LoginFormData) {
             }
         })
 
-        return await response.json();
+        const data = await response.json();
+        console.log(data)
+        if (data.success) {
+            return true
+        }
+
+        return false
     } catch (error) {
-        if (error instanceof Error)
+        if (error instanceof Error) {
             console.error(error.message)
+            return false
+        }
     }
 }
 
@@ -37,9 +45,16 @@ export async function registerCall(dadosRegistro: RegistrarFormData) {
             }
         })
 
-        return await response.json();
+        const data = await response.json();
+
+        if (data.success)
+            return true
+
+        return false
     } catch (error) {
-        if (error instanceof Error)
+        if (error instanceof Error) {
             console.error(error.message)
+            return false
+        }
     }
 }
