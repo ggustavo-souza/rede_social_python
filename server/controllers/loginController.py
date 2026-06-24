@@ -9,7 +9,7 @@ def handleLogin(request: UserLoginModel, session: Session):
     if usuarioBanco is not None:
         senhaBanco = usuarioBanco.senha
         if(verificarSenha(request.senha, senhaBanco)): 
-            return {"message": "Login Efetuado com sucesso"}
+            return {"message": "Login Efetuado com sucesso", "success": True}
             raise HTTPException(status_code=200, detail="Login efetuado")
     raise HTTPException(status_code=400, detail="Dados Inválidos")
 
@@ -18,7 +18,7 @@ def handleRegistro(request: UserRegisterModel, session: Session):
     novoUsuario = User(nome=request.nome, email=request.email, senha=senhaEncriptada)
     session.add(novoUsuario)
     session.commit()
-    return {"message": "Conta criada com sucesso!"}
+    return {"message": "Conta criada com sucesso!", "success": True}
     raise HTTPException(status_code=200, detail="Registro efetuado")
 
 
