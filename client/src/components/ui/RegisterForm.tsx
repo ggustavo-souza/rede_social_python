@@ -3,17 +3,21 @@ import Botao from "../elements/BotaoSubmit"
 import { type RegistrarFormData } from "../../types/FormTypes"
 import { registerCall } from "../../services/formsCall"
 import ProgressBar from "../elements/ProgressBar"
+import Modal from "../elements/Modal"
 
 
 export default function RegisterForm() {
     const [registerData, setRegisterData] = useState<RegistrarFormData>({ email: "", nome: "", senha: "", confirmarSenha: "" })
     const [alertForm, setAlertForm] = useState(false)
     const [step, setStep] = useState(0)
+    const [modal, setModal] = useState({ abrir: false, erro: false })
 
-    const handleSubmit = (event: React.SubmitEvent<HTMLFormElement>) => {
+    const handleSubmit = async (event: React.SubmitEvent<HTMLFormElement>) => {
         event.preventDefault();
         if (step !== 3) return;
-        registerCall(registerData)
+        const success = await registerCall(registerData)
+
+        success ? (setModal({ abrir: true, erro: false })) : (setModal({ abrir: true, erro: true }))
     }
 
     const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
@@ -175,6 +179,12 @@ export default function RegisterForm() {
                         </>
                     )}
                 </form>
+                {(modal.abrir === true && modal.erro === true) && (
+                    <Modal titulo="Houve um erro no registro!" texto="Tente novamente mais tarde!" tema="negative" funcaoFechar={() => setModal({ abrir: false, erro: false })} />
+                )}
+                {(modal.abrir === true && modal.erro === false) && (
+                    <Modal titulo="Registro efetuado com sucesso!" texto="Clique para continuar" tema="positive" destino="login" />
+                )}
             </section>
         </>
     )

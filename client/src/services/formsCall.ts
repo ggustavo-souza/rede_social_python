@@ -13,10 +13,9 @@ export async function loginCall(dadosLogin: LoginFormData) {
         })
 
         const data = await response.json();
-        console.log(data)
-        if (data.success) {
+
+        if (data.success)
             return true
-        }
 
         return false
     } catch (error) {
