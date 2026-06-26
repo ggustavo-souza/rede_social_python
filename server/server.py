@@ -1,7 +1,9 @@
+from fastapi import Depends
 from fastapi import FastAPI
 from database import BD
 from routes.loginRoutes import router as login_router
 from fastapi.middleware.cors import CORSMiddleware
+from controllers.userController import checarSessao
 app = FastAPI()
 origins = ["http://localhost:3000", "http://localhost:5173"]
 
@@ -17,7 +19,7 @@ app.add_middleware(
 app.include_router(login_router)
 
 @app.get("/")
-def boasVindas():
-    return {"mensagem": "Você se conectou com a API"}
+def boasVindas(user_id: int = (Depends(checarSessao))):
+    return {"mensagem": "Acesso autorizado!", "id_usuario": user_id}
 
 BD.createBD()
