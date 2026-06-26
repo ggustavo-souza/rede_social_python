@@ -1,6 +1,6 @@
 from models.user import UserLoginModel, UserRegisterModel
 from fastapi import APIRouter, Depends
-from controllers.loginController import handleLogin, handleRegistro
+from controllers.userController import handleLogin, handleRegistro
 from sqlalchemy.orm import Session
 from database import get_db
 
