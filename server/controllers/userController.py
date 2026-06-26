@@ -39,7 +39,7 @@ def checarSessao(request: Request):
     try:
         payload = decodeToken(token) 
         user_id = payload.get("sub")
-        return user_id
+        return {"message": "Sessão validada com sucesso!", "success": True, "id_usuario": user_id}
 
     except jwt.ExpiredSignatureError:
         raise HTTPException(
