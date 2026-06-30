@@ -12,8 +12,7 @@ def handleLogin(request: UserLoginModel, session: Session, response: Response):
     if usuarioBanco is not None:
         senhaBanco = usuarioBanco.senha
         if(verificarSenha(request.senha, senhaBanco)): 
-            idUsuario = usuarioBanco.id
-            token = createToken(idUsuario)
+            token = createToken(usuarioBanco.id, usuarioBanco.email)
             response.set_cookie(
                 key="token",
                 value=token,
@@ -21,7 +20,7 @@ def handleLogin(request: UserLoginModel, session: Session, response: Response):
                 secure=True,
                 samesite="lax",
                 max_age=3600,
-                path="/"         
+                path="/"
             )
             return {"message": "Login Efetuado com sucesso", "success": True}
             raise HTTPException(status_code=200, detail="Login efetuado")
