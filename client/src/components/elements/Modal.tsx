@@ -12,7 +12,7 @@ export default function Modal({ titulo, texto, tema, destino, funcaoFechar }: Mo
     return (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/25 backdrop-blur-sm">
             <main className="bg-[var(--color-primary)] p-8 rounded">
-                <header className="flex flex-col mb-4 mx-10">
+                <header className="flex flex-col mb-4 mx-10 text-center">
                     <h1 className="text-3xl font-bold my-2">{titulo}</h1>
                     <div className="flex justify-center my-2">
                         <img src={tema === "positive" ? (`check.svg`) : ('x.svg')} />
