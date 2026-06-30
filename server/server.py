@@ -18,7 +18,7 @@ app.add_middleware(
 app.include_router(login_router)
 
 @app.get("/auth")
-def boasVindas(token: str | Cookie(None) = Cookie(None)):
+def boasVindas(token: str | None = Cookie(None)):
     return checarSessao(token)
 
 BD.createBD()
