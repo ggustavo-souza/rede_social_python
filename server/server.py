@@ -1,5 +1,4 @@
-from fastapi import Depends
-from fastapi import FastAPI
+from fastapi import Depends, FastAPI, Cookie
 from database import BD
 from routes.loginRoutes import router as login_router
 from fastapi.middleware.cors import CORSMiddleware
@@ -18,8 +17,8 @@ app.add_middleware(
 
 app.include_router(login_router)
 
-@app.get("/")
-def boasVindas(user_id: int = (Depends(checarSessao))):
-    return {"mensagem": "Acesso autorizado!", "id_usuario": user_id}
+@app.get("/auth")
+def boasVindas(token: str | Cookie(None) = Cookie(None)):
+    return checarSessao(token)
 
 BD.createBD()

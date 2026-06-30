@@ -5,12 +5,12 @@ from services.envService import getJwtKey
 jwtKey = getJwtKey()
 jwtAlg = "HS256"
 
-def createToken(id: int):
+def createToken(id: int, email: str ):
     validade = datetime.datetime.now(datetime.timezone.utc) + datetime.timedelta(hours=1)
-
+    userData = {"id": id, "email": email}
     payload = {
         "exp": validade,
-        "sub": id
+        "sub": userData
     }
 
     token = jwt.encode(payload, jwtKey, algorithm=jwtAlg)

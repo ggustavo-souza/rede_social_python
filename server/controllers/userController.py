@@ -1,5 +1,5 @@
-from server.auth.token import decodeToken
-from server.auth.token import createToken
+from auth.token import decodeToken
+from auth.token import createToken
 from models.user import UserRegisterModel, UserLoginModel
 from services.senhaServices import encriptarSenha, verificarSenha
 from sqlalchemy.orm import Session
@@ -38,8 +38,8 @@ def checarSessao(request: Request):
 
     try:
         payload = decodeToken(token) 
-        user_id = payload.get("sub")
-        return {"message": "Sessão validada com sucesso!", "success": True, "id_usuario": user_id}
+        userData = payload.get("sub")
+        return {"message": "Sessão validada com sucesso!", "success": True, "id_usuario": userData}
 
     except jwt.ExpiredSignatureError:
         raise HTTPException(
@@ -51,6 +51,8 @@ def checarSessao(request: Request):
             status_code=401,
             detail="Token inválido"
         )
+
+# TODO: Rota de LOGOUT
 
 def handleRegistro(request: UserRegisterModel, session: Session):
     senhaEncriptada = encriptarSenha(request.senha)
