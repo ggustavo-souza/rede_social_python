@@ -4,18 +4,26 @@ import Home from "./pages/Home"
 import './assets/css/index.css'
 import LoginPage from "./pages/LoginPage"
 import RegisterPage from "./pages/RegisterPage"
+import { AuthProvider } from "./auth/AuthContext"
+import { ProtectedRoute } from "./auth/ProtectedRoute"
 
 function App() {
 
   return (
     <>
-      <Router>
-        <Routes>
-          <Route index element={<Home />} />
-          <Route path="/login" element={<LoginPage />} />
-          <Route path="/registrar" element={<RegisterPage />} />
-        </Routes>
-      </Router>
+      <AuthProvider>
+        <Router>
+          <Routes>
+            <Route index element={
+              <ProtectedRoute>
+                <Home />
+              </ProtectedRoute>
+            } />
+            <Route path="/login" element={<LoginPage />} />
+            <Route path="/registrar" element={<RegisterPage />} />
+          </Routes>
+        </Router>
+      </AuthProvider>
     </>
   )
 }
