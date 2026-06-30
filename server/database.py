@@ -24,6 +24,22 @@ class Post(Base):
     usuario_id = Column(Integer, ForeignKey("users.id"), nullable=False)
     data = Column(DateTime(timezone=True), server_default=func.now())
 
+class Curtidas(Base):
+    __tablename__ = "curtidas"
+
+    id = Column(Integer, primary_key=True, autoincrement=True)
+    usuario_id = Column(Integer, ForeignKey("users.id"), nullable=False)
+    post_id = Column(Integer, ForeignKey("posts.id"), nullable=False)
+
+class Comentarios(Base):
+    __tablename__ = "comentarios"
+
+    id = Column(Integer, primary_key=True, autoincrement=True)
+    usuario_id = Column(Integer, ForeignKey("users.id"), nullable=False)
+    post_id = Column(Integer, ForeignKey("posts.id"), nullable=False)
+    comentario = Column(String(255), nullable=False)
+    data = Column(DateTime(timezone=True), server_default=func.now())
+
 class BD: 
     bd = create_engine("sqlite:///banco.db", echo=False)
     SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=bd) #variavel pra criar a sessão
