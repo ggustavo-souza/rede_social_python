@@ -1,7 +1,9 @@
+from fastapi import UploadFile
 from models.post import PostModel
 from sqlalchemy.orm import Session
 from database import Post
-from fastapi import HTTPException
+from fastapi import HTTPException, Form
+from services.uploadService import handleUpload
 
 def getAllPosts(db: Session):
     posts = db.query(Post).all()
@@ -12,9 +14,21 @@ def getAllPosts(db: Session):
         raise HTTPException(status_code=404, detail="Não foi possível capturar os posts")
         return 
 
-def postPosts(db: Session, post: PostModel):
-    newPost = Post(titulo=post.titulo, conteudo=post.conteudo, foto=post.foto, usuario_id=post.usuario_id)
+def postPosts(db: Session, titulo: str, conteudo: str, usuario_id: int, foto: UploadFile):
     #TODO: Fazer lógica para processar a foto
+
+    fotoEnviada = handleUpload(foto)
+
+    if(fotoEnviada is not str):
+        raise HTTPException(status_code=404, detail="Não foi possível processar a foto.")
+
+    newPost = Post(
+        titulo=titulo,
+        conteudo=conteudo,
+        foto=fotoEnviada,
+        usuario_id=usuario_id
+    )
+
 
     db.add(newPost)
     db.commit()

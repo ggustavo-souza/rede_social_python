@@ -1,5 +1,6 @@
+from fastapi import UploadFile
 from controllers.postController import getAllPosts, postPosts, editPost, deletePost
-from fastapi import APIRouter, Depends, Body, Path
+from fastapi import APIRouter, Depends, Body, Path, Form, File
 from database import get_db
 from models.post import PostModel
 from sqlalchemy.orm import Session
@@ -11,8 +12,8 @@ def getPosts(db: Session = Depends(get_db)):
     return getAllPosts(db)
 
 @router.post("/posts")
-def postPosts(db: Session = Depends(get_db), post: PostModel = Body(...)):
-    return postPosts(db, post)
+def createPosts(db: Session = Depends(get_db), titulo: str = Form(...), conteudo: str = Form(...), usuario_id: int = Form(...), foto: UploadFile = File(...)):
+    return postPosts(db, titulo, conteudo, usuario_id, foto)
 
 @router.put("/posts/{id}")
 def editPost(db: Session = Depends(get_db), post: PostModel = Body(...), id: int = Path(...)):
