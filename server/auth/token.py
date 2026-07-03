@@ -10,7 +10,8 @@ def createToken(id: int, email: str ):
     userData = {"id": id, "email": email}
     payload = {
         "exp": validade,
-        "sub": userData
+        "sub": str(id),
+        "user": userData
     }
 
     token = jwt.encode(payload, jwtKey, algorithm=jwtAlg)
@@ -18,5 +19,5 @@ def createToken(id: int, email: str ):
     return token
 
 def decodeToken(token):
-    return jwt.decode(token, jwtKey, algorithms=jwtAlg)
+    return jwt.decode(token, jwtKey, algorithms=[jwtAlg])
 

@@ -1,11 +1,11 @@
-from fastapi import Depends, FastAPI, Cookie
+from fastapi import FastAPI, Request
 from fastapi.staticfiles import StaticFiles
 from database import BD
 from routes.loginRoutes import router as login_router
 from fastapi.middleware.cors import CORSMiddleware
 from controllers.userController import checarSessao
 app = FastAPI()
-origins = ["http://localhost:3000", "http://localhost:5173"]
+origins = ["http://localhost:5173"]
 
 # configuracoes de CORS
 app.add_middleware(
@@ -22,7 +22,7 @@ app.include_router(login_router)
 app.mount("/public", StaticFiles(directory="public"), name="public")
 
 @app.get("/auth")
-def boasVindas(token: str | None = Cookie(None)):
-    return checarSessao(token)
+def boasVindas(request: Request):
+    return checarSessao(request)
 
 BD.createBD()
