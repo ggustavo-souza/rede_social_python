@@ -14,7 +14,7 @@ function App() {
       <AuthProvider>
         <Router>
           <Routes>
-            <Route index element={
+            <Route path="/home" element={
               <ProtectedRoute>
                 <Home />
               </ProtectedRoute>

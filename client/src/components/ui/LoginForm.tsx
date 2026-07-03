@@ -2,6 +2,7 @@ import { useState, type ChangeEvent } from "react";
 import Botao from "../elements/BotaoSubmit"
 import { type LoginFormData } from "../../types/FormTypes";
 import { loginCall } from "../../services/formsCall";
+import { useAuth } from "../../auth/AuthContext";
 import Modal from "../elements/Modal";
 
 export default function LoginForm() {
@@ -11,11 +12,18 @@ export default function LoginForm() {
     })
     const [modal, setModal] = useState({ abrir: false, erro: false })
 
+    const { verificarAuth } = useAuth();
+
     const handleSubmit = async (event: React.SubmitEvent<HTMLFormElement>) => {
         event.preventDefault();
         const success = await loginCall(loginData);
 
-        success ? (setModal({ abrir: true, erro: false })) : (setModal({ abrir: true, erro: true }))
+        if (success) {
+            await verificarAuth();
+            setModal({ abrir: true, erro: false });
+        } else {
+            setModal({ abrir: true, erro: true });
+        }
     }
 
     const handleChange = (event: ChangeEvent<HTMLInputElement>) => {

@@ -9,7 +9,8 @@ export async function loginCall(dadosLogin: LoginFormData) {
             body: JSON.stringify(dadosLogin),
             headers: {
                 "Content-Type": "application/json"
-            }
+            },
+            credentials: "include"
         })
 
         const data = await response.json();

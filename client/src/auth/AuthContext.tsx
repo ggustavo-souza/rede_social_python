@@ -9,6 +9,7 @@ interface AuthContextType {
     user: Usuario | null;
     authenticated: boolean;
     loading: boolean;
+    verificarAuth: () => Promise<void>;
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined)
@@ -50,7 +51,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
     }, [])
 
     return (
-        <AuthContext.Provider value={{ user, authenticated: !!user, loading }}>
+        <AuthContext.Provider value={{ user, authenticated: !!user, loading, verificarAuth }}>
             {children}
         </AuthContext.Provider>
     )
