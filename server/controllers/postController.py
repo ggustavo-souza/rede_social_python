@@ -7,12 +7,7 @@ from services.uploadService import handleUpload
 
 def getAllPosts(db: Session):
     posts = db.query(Post).all()
-    if(posts != ""):
-        raise HTTPException(status_code=200, detail="Posts capturados com sucesso!")
-        return posts
-    else:
-        raise HTTPException(status_code=404, detail="Não foi possível capturar os posts")
-        return 
+    return posts
 
 def postPosts(db: Session, titulo: str, conteudo: str, usuario_id: int, foto: UploadFile):
     #TODO: Fazer lógica para processar a foto

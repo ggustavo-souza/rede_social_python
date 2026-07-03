@@ -2,6 +2,7 @@ from fastapi import FastAPI, Request
 from fastapi.staticfiles import StaticFiles
 from database import BD
 from routes.loginRoutes import router as login_router
+from routes.postsRoutes import router as posts_router
 from fastapi.middleware.cors import CORSMiddleware
 from controllers.userController import checarSessao
 app = FastAPI()
@@ -17,6 +18,7 @@ app.add_middleware(
 )
 
 app.include_router(login_router)
+app.include_router(posts_router)
 
 #incluindo a pasta "public" de uploads para que o cliente consiga alcançá-la
 app.mount("/public", StaticFiles(directory="public"), name="public")
