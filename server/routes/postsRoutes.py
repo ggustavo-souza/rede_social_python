@@ -8,8 +8,8 @@ from sqlalchemy.orm import Session
 router = APIRouter()
 
 @router.get("/posts")
-def getPosts(db: Session = Depends(get_db)):
-    return getAllPosts(db)
+def getPosts(db: Session = Depends(get_db), offset: int = 0, limit: int = 3):
+    return getAllPosts(db, offset, limit)
 
 @router.post("/posts")
 def createPosts(db: Session = Depends(get_db), titulo: str = Form(...), conteudo: str = Form(...), usuario_id: int = Form(...), foto: UploadFile = File(...)):
