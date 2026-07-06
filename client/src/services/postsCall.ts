@@ -1,8 +1,8 @@
 const apiUrl = "http://localhost:8000"
 
-export async function getAllPosts() {
+export async function getAllPosts(offset: number, limit: number) {
     try {
-        const response = await fetch(`${apiUrl}/posts`, {
+        const response = await fetch(`${apiUrl}/posts?offset=${offset}&limit=${limit}`, {
             method: "GET",
             headers: {
                 "Content-Type": "application/json"
