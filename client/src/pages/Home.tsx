@@ -2,21 +2,25 @@ import { useEffect, useMemo, useState } from "react"
 import { getAllPosts } from "../services/postsCall"
 import Loading from "../components/elements/Loading";
 import { type Post } from "../types/PostType"
+import PostsScroll from "../components/ui/PostsScroll";
 
 export default function Home() {
 
     const [loading, setLoading] = useState(true)
     const [posts, setPosts] = useState<Post[]>([])
-    const[offset, setOffset] = useState(0)
+    const [offset, setOffset] = useState(0)
     const limit = 3
-    const imagesUrl: string = "http://localhost:8000/"
 
 
     useEffect(() => {
         async function catchPosts() {
             try {
                 const getPosts = await getAllPosts(offset, limit);
-                setPosts(getPosts)
+                if (offset > 0) {
+                    setPosts(prevPosts => [...prevPosts, ...getPosts])
+                }
+                else
+                    setPosts(getPosts)
             } catch (e) {
                 if (e instanceof Error) {
                     console.error(e.message)
@@ -52,22 +56,11 @@ export default function Home() {
 
     return (
         <>
+            {/*TODO: Estilizar a lista de posts e de preferência transformá-lo em um componente separado*/}
             {loading && <Loading />}
 
-            {posts.length === 0 ? (
-                <>
-                    <p>Nenhum post foi encontrado.</p>
-                </>
-            ) : (
-                posts.map((post: Post) => (
-                    <div key={post.id}>
-                        <p>{post.titulo}</p>
-                        <p>{post.conteudo}</p>
-                        <p>{post.data}</p>
-                        <img src={`${imagesUrl}${post.foto}`} />
-                    </div>
-                )))
-            }
+            <PostsScroll posts={posts} />
+        
             <div id="target"></div>
         </>
     )
