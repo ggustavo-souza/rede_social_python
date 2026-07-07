@@ -17,7 +17,11 @@ export default function RegisterForm() {
         if (step !== 3) return;
         const success = await registerCall(registerData)
 
-        success ? (setModal({ abrir: true, erro: false })) : (setModal({ abrir: true, erro: true }))
+        if (success) {
+            setModal({ abrir: true, erro: false });
+        } else {
+            setModal({ abrir: true, erro: true });
+        }
     }
 
     const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
