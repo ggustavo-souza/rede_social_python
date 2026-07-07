@@ -51,6 +51,39 @@ class BD:
     @classmethod
     def getEngine(cls):
         return cls.bd
+    
+    @classmethod
+    def seedDB(cls):
+        session = cls.SessionLocal()
+        try:
+            existing_users = session.query(User).first()
+            if existing_users:
+                print("Usuários já existem na tabela. Nenhum usuário será adicionado.")
+                return
+            
+            user1 = User(nome="Gustavo", email="foxcontryman8@gmail.com", senha="$2b$12$TD.uoiHyFEuQEg0ehWQAjubk9zzaImMIlLvj6mwxq5jQcXiXN5GDq")
+            session.add(user1)
+            session.commit()
+            print("Usuário de exemplo adicionado com sucesso.")
+
+            # Verifica se já existem posts na tabela
+            existing_posts = session.query(Post).first()
+            if existing_posts:
+                print("Posts já existem na tabela. Nenhum post será adicionado.")
+                return
+
+            # Adiciona posts de exemplo
+            post1 = Post(titulo="Post 1", conteudo="Conteúdo do post 1", foto="imagem1.jpg", usuario_id=1)
+            post2 = Post(titulo="Post 2", conteudo="Conteúdo do post 2", foto="imagem2.jpg", usuario_id=1)
+            post3 = Post(titulo="Post 3", conteudo="Conteúdo do post 3", foto="imagem4.jpeg", usuario_id=1)
+            post4 = Post(titulo="Post 4", conteudo="Conteúdo do post 4", foto="imagem5.jpeg", usuario_id=1)
+            session.add_all([post1, post2, post3, post4])
+            session.commit()
+            print("Posts de exemplo adicionados com sucesso.")
+        except Exception as e:
+            session.rollback()
+            print(f"Erro ao adicionar posts de exemplo: {e}")
+
 
 def get_db():
     db = BD.SessionLocal() #pega a sessão e joga na variável db

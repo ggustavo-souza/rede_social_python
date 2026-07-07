@@ -20,6 +20,9 @@ app.add_middleware(
 app.include_router(login_router)
 app.include_router(posts_router)
 
+BD.seedDB()
+BD.createBD()
+
 #incluindo a pasta "public" de uploads para que o cliente consiga alcançá-la
 app.mount("/public", StaticFiles(directory="public"), name="public")
 
@@ -27,4 +30,3 @@ app.mount("/public", StaticFiles(directory="public"), name="public")
 def boasVindas(request: Request):
     return checarSessao(request)
 
-BD.createBD()
