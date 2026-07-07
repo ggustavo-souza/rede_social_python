@@ -58,7 +58,7 @@ export default function LoginForm() {
                 <Modal titulo="Houve um erro no login!" texto="Tente novamente mais tarde!" tema="negative" funcaoFechar={() => setModal({ abrir: false, erro: false })} />
             )}
             {(modal.abrir === true && modal.erro === false) && (
-                <Modal titulo="Login efetuado com sucesso!" texto="Clique para continuar" tema="positive" destino="home" />
+                <Modal titulo="Login efetuado com sucesso!" texto="Clique para continuar" tema="positive" destino=" " />
             )}
         </>
     )

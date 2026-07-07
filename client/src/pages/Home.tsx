@@ -9,7 +9,7 @@ export default function Home() {
     const [posts, setPosts] = useState<Post[]>([])
     const[offset, setOffset] = useState(0)
     const limit = 3
-    const imagesUrl: string = "http://localhost:8000/public/"
+    const imagesUrl: string = "http://localhost:8000/"
 
 
     useEffect(() => {
