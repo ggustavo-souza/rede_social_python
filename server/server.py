@@ -20,8 +20,8 @@ app.add_middleware(
 app.include_router(login_router)
 app.include_router(posts_router)
 
-BD.seedDB()
 BD.createBD()
+BD.seedDB()
 
 #incluindo a pasta "public" de uploads para que o cliente consiga alcançá-la
 app.mount("/public", StaticFiles(directory="public"), name="public")
