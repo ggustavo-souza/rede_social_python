@@ -59,7 +59,6 @@ def handleRegistro(request: UserRegisterModel, session: Session):
     session.add(novoUsuario)
     session.commit()
     return {"message": "Conta criada com sucesso!", "success": True}
-    raise HTTPException(status_code=200, detail="Registro efetuado")
 
 
 
