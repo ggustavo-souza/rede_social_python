@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from "react"
+import { useEffect, useMemo, useState, useRef } from "react"
 import { getAllPosts } from "../services/postsCall"
 import Loading from "../components/elements/Loading";
 import { type Post } from "../types/PostType"
@@ -7,6 +7,8 @@ import PostsScroll from "../components/ui/PostsScroll";
 export default function Home() {
 
     const [loading, setLoading] = useState(true)
+    const [initialLoading, setInitialLoading] = useState(true)
+    const [hasMore, setHasMore] = useState(true)
     const [posts, setPosts] = useState<Post[]>([])
     const [offset, setOffset] = useState(0)
     const limit = 3
@@ -14,8 +16,16 @@ export default function Home() {
 
     useEffect(() => {
         async function catchPosts() {
+            if(!hasMore) return
+
+            if(offset > 0) setLoading(true)
             try {
                 const getPosts = await getAllPosts(offset, limit);
+
+                if(getPosts.length < limit) {
+                    setHasMore(false)
+                }
+
                 if (offset > 0) {
                     setPosts(prevPosts => [...prevPosts, ...getPosts])
                 }
@@ -27,22 +37,25 @@ export default function Home() {
                 }
             } finally {
                 setLoading(false)
+                setInitialLoading(false)
             }
         }
         catchPosts()
-    }, [offset])
+    }, [offset, hasMore])
 
     const memoizedObserver = useMemo(() => {
         return new IntersectionObserver((entries) => {
-            if (entries[0].isIntersecting) {
+            if (entries[0].isIntersecting && !loading && !initialLoading && hasMore) {
                 console.log("Elemento visível na tela!")
                 setOffset(prevOffset => prevOffset + limit)
             }
         })
-    }, [])
+    }, [loading, initialLoading, hasMore])
+
+    const targetRef = useRef<HTMLDivElement>(null)
 
     useEffect(() => {
-        const target = document.querySelector("#target")
+        const target = targetRef.current
         if (target) {
             memoizedObserver.observe(target)
         }
@@ -52,16 +65,17 @@ export default function Home() {
                 memoizedObserver.unobserve(target)
             }
         }
-    }, [memoizedObserver])
+    }, [memoizedObserver, posts])
 
     return (
         <>
             {/*TODO: Estilizar a lista de posts e de preferência transformá-lo em um componente separado*/}
-            {loading && <Loading />}
+            {initialLoading && <Loading />}
 
             <PostsScroll posts={posts} />
         
-            <div id="target"></div>
+            {hasMore && <div ref={targetRef} className="d-none"></div>}
+            {!hasMore && <p>Não há mais posts para carregar.</p>}
         </>
     )
 }
