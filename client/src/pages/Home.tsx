@@ -16,13 +16,13 @@ export default function Home() {
 
     useEffect(() => {
         async function catchPosts() {
-            if(!hasMore) return
+            if (!hasMore) return
 
-            if(offset > 0) setLoading(true)
+            if (offset > 0) setLoading(true)
             try {
                 const getPosts = await getAllPosts(offset, limit);
 
-                if(getPosts.length < limit) {
+                if (getPosts.length < limit) {
                     setHasMore(false)
                 }
 
@@ -69,13 +69,36 @@ export default function Home() {
 
     return (
         <>
-            {/*TODO: Estilizar a lista de posts e de preferência transformá-lo em um componente separado*/}
-            {initialLoading && <Loading />}
+            <main className="flex flex-row gap-20 justify-end">
+                <section className="flex flex-col w-3/4">
+                    {initialLoading && <Loading />}
 
-            <PostsScroll posts={posts} />
-        
-            {hasMore && <div ref={targetRef} className="d-none"></div>}
-            {!hasMore && <p>Não há mais posts para carregar.</p>}
+                    <h2 className="text-center my-6 text-xl">Posts</h2>
+                    <PostsScroll posts={posts} />
+
+                    {hasMore && <div ref={targetRef} className="d-none"></div>}
+                    {!hasMore && <p>Não há mais posts para carregar.</p>}
+                </section>
+
+                <aside className="flex flex-col bg-(--color-secondary) p-4 items-center gap-8 ">
+                    <img src="/image.png" width="50" height="50" />
+                    <button className="cursor-pointer hover:transform hover:scale-115">
+                        <i className=" bi bi-search text-2xl text-white font-bold"></i>
+                    </button>
+                    <button className="cursor-pointer hover:transform hover:scale-115">
+                        <i className="bi bi-person text-2xl text-white font-bold"></i>
+                    </button>
+                    <button className="cursor-pointer hover:transform hover:scale-115">
+                        <i className="bi bi-plus-square text-2xl text-white font-bold"></i>
+                    </button>
+                    <button className="cursor-pointer hover:transform hover:scale-115">
+                        <i className="bi bi-gear-wide text-2xl text-white font-bold"></i>
+                    </button>
+                    <button className="cursor-pointer hover:transform hover:scale-115">
+                        <i className="bi bi-box-arrow-left text-2xl text-white font-bold"></i>
+                    </button>
+                </aside>
+            </main>
         </>
     )
 }
