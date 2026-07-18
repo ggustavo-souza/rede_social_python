@@ -1,4 +1,5 @@
 import { useEffect, useMemo, useState, useRef } from "react"
+import { useNavigate } from "react-router"
 import { getAllPosts } from "../services/postsCall"
 import Loading from "../components/elements/Loading";
 import { type Post } from "../types/PostType"
@@ -7,6 +8,7 @@ import PostsScroll from "../components/ui/PostsScroll";
 export default function Home() {
 
     const [loading, setLoading] = useState(true)
+    const navigate = useNavigate()
     const [initialLoading, setInitialLoading] = useState(true)
     const [hasMore, setHasMore] = useState(true)
     const [posts, setPosts] = useState<Post[]>([])
@@ -69,8 +71,8 @@ export default function Home() {
 
     return (
         <>
-            <main className="flex flex-row gap-20 justify-end">
-                <section className="flex flex-col w-3/4">
+            <main className="flex flex-row gap-20">
+                <section className="flex flex-col w-full max-w-2xl mx-auto p-4">
                     {initialLoading && <Loading />}
 
                     <h2 className="text-center my-6 text-xl">Posts</h2>
@@ -80,7 +82,7 @@ export default function Home() {
                     {!hasMore && <p>Não há mais posts para carregar.</p>}
                 </section>
 
-                <aside className="flex flex-col bg-(--color-secondary) p-4 items-center gap-8 ">
+                <aside className="flex flex-col bg-(--color-secondary) p-4 items-center gap-8 fixed right-0 h-screen ">
                     <img src="/image.png" width="50" height="50" />
                     <button className="cursor-pointer hover:transform hover:scale-115">
                         <i className=" bi bi-search text-2xl text-white font-bold"></i>
@@ -88,7 +90,7 @@ export default function Home() {
                     <button className="cursor-pointer hover:transform hover:scale-115">
                         <i className="bi bi-person text-2xl text-white font-bold"></i>
                     </button>
-                    <button className="cursor-pointer hover:transform hover:scale-115">
+                    <button className="cursor-pointer hover:transform hover:scale-115" onClick={() => navigate("/create-post")}>
                         <i className="bi bi-plus-square text-2xl text-white font-bold"></i>
                     </button>
                     <button className="cursor-pointer hover:transform hover:scale-115">
