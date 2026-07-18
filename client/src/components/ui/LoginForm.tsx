@@ -43,11 +43,11 @@ export default function LoginForm() {
                 <form className="flex flex-col" onSubmit={(e) => handleSubmit(e)}>
                     <div className="flex flex-col my-2">
                         <label htmlFor="email">E-mail</label>
-                        <input value={loginData.email} onChange={handleChange} className="ring-2 active:ring-3 focus:outline-[var(--color-tertiary)] focus: ring-gray-300 my-2 p-3 rounded-sm" name="email" id="email" type="text" placeholder="Example@email.com" />
+                        <input value={loginData.email} onChange={handleChange} className="ring-2 active:ring-3 focus:outline-(--color-tertiary) focus: ring-gray-300 my-2 p-3 rounded-sm" name="email" id="email" type="text" placeholder="Example@email.com" />
                     </div>
                     <div className="flex flex-col my-2">
                         <label htmlFor="senha">Senha</label>
-                        <input value={loginData.senha} onChange={handleChange} className="ring-2 active:ring-3 focus:outline-[var(--color-tertiary)] ring-gray-300 my-2 p-3 rounded-sm" name="senha" id="senha" type="password" placeholder="••••••••••" />
+                        <input value={loginData.senha} onChange={handleChange} className="ring-2 active:ring-3 focus:outline-(--color-tertiary) ring-gray-300 my-2 p-3 rounded-sm" name="senha" id="senha" type="password" placeholder="••••••••••" />
                     </div>
                     <div className="flex justify-center my-10">
                         <Botao texto="ENTRAR" type="submit" tamanho="lg" />
