@@ -32,6 +32,15 @@ input[type="text"], input[type="password"], input[type="email"], textarea {
     border-radius: 0.4rem;
 }
 
+input[type="file"]::file-selector-button {
+    background-color: var(--color-secondary);
+    color: var(--color-primary);
+    border: none;
+    padding: 0.5rem 1rem;
+    border-radius: 0.4rem;
+    cursor: pointer;
+}
+
 .animationBotao:hover {
     transform: scale(1.03);
     transition: all 0.1s ease-out;
