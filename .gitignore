@@ -29,3 +29,5 @@
 /client/*.sln
 /client/*.sw?
 /client/*.txt
+
+*.sh
