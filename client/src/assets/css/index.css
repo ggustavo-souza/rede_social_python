@@ -19,8 +19,17 @@ body {
     background-color: var(--color-primary);
 }
 
-input::placeholder {
+input::placeholder, textarea::placeholder {
     color: var(--color-placeholder)
+}
+
+input:focus, textarea:focus {
+    outline: none;
+}
+
+input[type="text"], input[type="password"], input[type="email"], textarea {
+    border: 2px solid #f3f4f4;
+    border-radius: 0.4rem;
 }
 
 .animationBotao:hover {
@@ -32,3 +41,4 @@ input::placeholder {
 .animationBotao {
     transition: all 0.1s ease-out;
 }
+
