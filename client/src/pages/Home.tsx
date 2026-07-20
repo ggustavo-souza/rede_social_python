@@ -79,7 +79,7 @@ export default function Home() {
                     <PostsScroll posts={posts} />
 
                     {hasMore && <div ref={targetRef} className="d-none"></div>}
-                    {!hasMore && <p>Não há mais posts para carregar.</p>}
+                    {!hasMore && <p className="text-center">Não há mais posts para carregar.</p>}
                 </section>
 
                 <aside className="flex flex-col bg-(--color-secondary) p-4 items-center gap-8 fixed right-0 h-screen ">

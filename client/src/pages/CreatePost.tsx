@@ -1,30 +1,19 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useNavigate } from "react-router";
 import Botao from "../components/elements/BotaoSubmit";
 import { type PostFormData } from "../types/PostType";
-import { useAuth } from "../auth/AuthContext";
 import Modal from "../components/elements/Modal";
 
 export default function CreatePost() {
-    const { user } = useAuth();
     const [modal, setModal] = useState<boolean>(false);
     const [formData, setFormData] = useState<PostFormData>({
         titulo: "",
         conteudo: "",
-        usuario_id: user?.id,
+        usuario_id: localStorage.getItem("usuario_id"),
         foto: null
     });
     const [selectedImage, setSelectedImage] = useState<string>();
     const navigate = useNavigate();
-
-    useEffect(() => {
-        if (user?.id) {
-            setFormData(prev => ({
-                ...prev,
-                usuario_id: user.id
-            }));
-        }
-    }, [user]);
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
         const { name, value } = e.target;
@@ -50,18 +39,10 @@ export default function CreatePost() {
         reader.readAsDataURL(file);
     };
 
-    const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    const handleSubmit = async (e: React.SubmitEvent<HTMLFormElement>) => {
         e.preventDefault();
 
-        const data = new FormData();
-        data.append("titulo", formData.titulo);
-        data.append("conteudo", formData.conteudo);
-        if (formData.usuario_id != null) {
-            data.append("usuario_id", String(formData.usuario_id));
-        }
-        if (formData.foto) {
-            data.append("foto", formData.foto);
-        }
+        const data = new FormData(e.currentTarget);
 
         try {
             const res = await fetch("http://localhost:8000/posts", {
@@ -70,7 +51,7 @@ export default function CreatePost() {
             });
 
             if (res.ok) {
-                navigate("/posts");
+                navigate("/");
             } else {
                 setModal(true);
             }
@@ -98,12 +79,11 @@ export default function CreatePost() {
                             <label htmlFor="titulo">Título do post:</label>
                             <input onChange={handleChange} type="text" className="rounded-lg p-3" name="titulo" placeholder="Ex: Hoje colhi batatas" />
                         </div>
-                        <input type="hidden" name="usuario_id" value={formData.usuario_id ?? ""} />
                         <div className="flex flex-col gap-2 p-4 rounded-lg bg-(--color-tertiary)">
                             <label htmlFor="conteudo">Conteúdo do post:</label>
                             <textarea onChange={handleChange} name="conteudo" className="rounded-lg p-3" placeholder="Descreva seu post..."></textarea>
                         </div>
-
+                        <input type="hidden" name="usuario_id" value={formData.usuario_id ?? ""} />
                         { /* TODO: Fazer o botão de upload customizado */}
                         <div className="flex flex-col gap-2 p-4 rounded-lg bg-(--color-tertiary) mb-4">
                             <label htmlFor="foto">Escolha a imagem do post</label>

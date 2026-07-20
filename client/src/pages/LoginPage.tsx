@@ -6,9 +6,9 @@ export default function LoginPage() {
         <>
             <main className="flex flex-row border-3 min-h-screen">
                 <LoginForm />
-                <aside className="bg-[var(--color-tertiary)] flex flex-col min-h-screen p-10 py-5">
+                <aside className="bg-(--color-tertiary) flex flex-col min-h-screen p-10 py-5">
                     <img className="mx-auto" src="/image.png" height="70" width="70"></img>
-                    <header className="text-[var(--color-primary)] font-semibold text-3xl text-center my-5">
+                    <header className="text-(--color-primary) font-semibold text-3xl text-center my-5">
                         <h1>Ainda não possui conta?</h1>
                     </header>
                     <main className="justify-center flex flex-col my-20 p-2 gap-2">

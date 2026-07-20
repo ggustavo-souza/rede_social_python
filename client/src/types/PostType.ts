@@ -10,6 +10,6 @@ export interface Post {
 export interface PostFormData {
     titulo: string,
     conteudo: string,
-    usuario_id: number | undefined,
+    usuario_id: string | null
     foto: File | null
 }

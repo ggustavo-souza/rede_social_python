@@ -15,8 +15,10 @@ export async function loginCall(dadosLogin: LoginFormData) {
 
         const data = await response.json();
 
-        if (data.success)
+        if (data.success) {
+            localStorage.setItem("usuario_id", data.usuario_id)
             return true
+        }
 
         return false
     } catch (error) {
@@ -47,8 +49,9 @@ export async function registerCall(dadosRegistro: RegistrarFormData) {
 
         const data = await response.json();
 
-        if (data.success)
+        if (data.success) 
             return true
+
 
         return false
     } catch (error) {

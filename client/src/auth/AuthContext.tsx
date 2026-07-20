@@ -35,11 +35,13 @@ export function AuthProvider({ children }: AuthProviderProps) {
                 setUser(data)
             } else {
                 setUser(null)
+                localStorage.removeItem("usuario_id")
             }
         } catch (e) {
             if (e instanceof Error) {
                 console.error(e.message)
                 setUser(null)
+                localStorage.removeItem("usuario_id")
             }
         } finally {
             setLoading(false)
