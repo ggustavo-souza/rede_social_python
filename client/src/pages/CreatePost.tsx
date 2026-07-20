@@ -1,12 +1,11 @@
-import { useState } from "react";
-import {useNavigate} from "react-router"
+import { useEffect, useState } from "react";
+import { useNavigate } from "react-router";
 import Botao from "../components/elements/BotaoSubmit";
 import { type PostFormData } from "../types/PostType";
 import { useAuth } from "../auth/AuthContext";
 import Modal from "../components/elements/Modal";
 
 export default function CreatePost() {
-
     const { user } = useAuth();
     const [modal, setModal] = useState<boolean>(false);
     const [formData, setFormData] = useState<PostFormData>({
@@ -15,31 +14,17 @@ export default function CreatePost() {
         usuario_id: user?.id,
         foto: null
     });
-
     const [selectedImage, setSelectedImage] = useState<string>();
     const navigate = useNavigate();
 
-    const handleSubmit = (e: React.SubmitEvent<HTMLFormElement>) => {
-        e.preventDefault();
-        console.log(formData.usuario_id)
-        const data = new FormData(e.currentTarget);
-
-        const response = fetch("http://localhost:8000/posts", {
-            method: "POST",
-            body: data
-        })
-
-        response.then(res => {
-            if (res.ok) {
-                navigate("/posts")
-            } else {
-                console.error("Erro ao criar post")
-                setModal(true)
-            }
-        }).catch(err => {
-            console.error("Erro ao criar post", err)
-        })
-    }
+    useEffect(() => {
+        if (user?.id) {
+            setFormData(prev => ({
+                ...prev,
+                usuario_id: user.id
+            }));
+        }
+    }, [user]);
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
         const { name, value } = e.target;
@@ -47,8 +32,53 @@ export default function CreatePost() {
             ...prevState,
             [name]: value
         }));
-    }
+    };
 
+    const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        const file = e.target.files?.[0];
+        if (!file) return;
+
+        setFormData(prevState => ({
+            ...prevState,
+            foto: file
+        }));
+
+        const reader = new FileReader();
+        reader.onload = () => {
+            setSelectedImage(reader.result as string);
+        };
+        reader.readAsDataURL(file);
+    };
+
+    const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+        e.preventDefault();
+
+        const data = new FormData();
+        data.append("titulo", formData.titulo);
+        data.append("conteudo", formData.conteudo);
+        if (formData.usuario_id != null) {
+            data.append("usuario_id", String(formData.usuario_id));
+        }
+        if (formData.foto) {
+            data.append("foto", formData.foto);
+        }
+
+        try {
+            const res = await fetch("http://localhost:8000/posts", {
+                method: "POST",
+                body: data
+            });
+
+            if (res.ok) {
+                navigate("/posts");
+            } else {
+                setModal(true);
+            }
+        } catch (err) {
+            console.error("Erro ao criar post", err);
+            setModal(true);
+        }
+    };
 
     return (
         <main className="flex flex-col">
@@ -68,7 +98,7 @@ export default function CreatePost() {
                             <label htmlFor="titulo">Título do post:</label>
                             <input onChange={handleChange} type="text" className="rounded-lg p-3" name="titulo" placeholder="Ex: Hoje colhi batatas" />
                         </div>
-                        <input type="hidden" name="usuario_id" value={formData.usuario_id} />
+                        <input type="hidden" name="usuario_id" value={formData.usuario_id ?? ""} />
                         <div className="flex flex-col gap-2 p-4 rounded-lg bg-(--color-tertiary)">
                             <label htmlFor="conteudo">Conteúdo do post:</label>
                             <textarea onChange={handleChange} name="conteudo" className="rounded-lg p-3" placeholder="Descreva seu post..."></textarea>
@@ -77,16 +107,13 @@ export default function CreatePost() {
                         { /* TODO: Fazer o botão de upload customizado */}
                         <div className="flex flex-col gap-2 p-4 rounded-lg bg-(--color-tertiary) mb-4">
                             <label htmlFor="foto">Escolha a imagem do post</label>
-                            <input onChange={(e) => {
-                                const file = e.target.files?.[0];
-                                if (file) {
-                                    const reader = new FileReader();
-                                    reader.onload = () => {
-                                        setSelectedImage(reader.result as string);
-                                    };
-                                    reader.readAsDataURL(file);
-                                }
-                            }} type="file" className="rounded-lg  border" name="foto" accept="image/*" />
+                            <input
+                                onChange={handleFileChange}
+                                type="file"
+                                name="foto"
+                                accept="image/*"
+                                className="rounded-lg border"
+                            />
                         </div>
 
                         <Botao type="submit" texto="Criar post" tamanho="lg" estilo="solid" />
@@ -101,5 +128,5 @@ export default function CreatePost() {
             </div>
             {modal && <Modal titulo="Erro ao criar post" texto="Ocorreu um erro ao criar o post. Por favor, tente novamente." tema="negative" destino="" funcaoFechar={() => setModal(false)} />   }
         </main>
-    )
+    );
 }
