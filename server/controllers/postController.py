@@ -10,7 +10,6 @@ def getAllPosts(db: Session, offset: int, limit: int):
     return posts
 
 def postPosts(db: Session, titulo: str, conteudo: str, usuario_id: int, foto: UploadFile):
-    #TODO: Fazer lógica para processar a foto
 
     fotoEnviada = handleUpload(foto)
 
