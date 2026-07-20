@@ -4,6 +4,7 @@
 /server/__pycache__
 */*/__pycache__
 /server/*.db
+/server/public/images/
 
 /client/logs
 /client/*.log
