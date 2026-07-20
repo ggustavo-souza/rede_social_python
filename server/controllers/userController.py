@@ -22,8 +22,7 @@ def handleLogin(request: UserLoginModel, session: Session, response: Response):
                 max_age=3600,
                 path="/"
             )
-            return {"message": "Login Efetuado com sucesso", "success": True}
-            raise HTTPException(status_code=200, detail="Login efetuado")
+            return {"message": "Login Efetuado com sucesso", "success": True, "usuario_id": usuarioBanco.id}
     raise HTTPException(status_code=400, detail="Dados Inválidos")
 
 def checarSessao(request: Request):

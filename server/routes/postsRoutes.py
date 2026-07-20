@@ -12,7 +12,7 @@ def getPosts(db: Session = Depends(get_db), offset: int = 0, limit: int = 3):
     return getAllPosts(db, offset, limit)
 
 @router.post("/posts")
-def createPosts(db: Session = Depends(get_db), titulo: str = Form(...), conteudo: str = Form(...), usuario_id: int = Form(...), foto: UploadFile = File(...)):
+def createPosts(db: Session = Depends(get_db), titulo: str = Form(...), conteudo: str = Form(...), usuario_id: str = Form(...), foto: UploadFile = File(...)):
     return postPosts(db, titulo, conteudo, usuario_id, foto)
 
 @router.put("/posts/{id}")

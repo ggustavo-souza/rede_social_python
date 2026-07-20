@@ -3,7 +3,7 @@ from fastapi import UploadFile, HTTPException
 import os, uuid
 
 def handleUpload(foto: UploadFile):
-    pastaUploads = "public"
+    pastaUploads = "public/images"
 
     if not os.path.exists(pastaUploads):
         os.makedirs(pastaUploads)
@@ -17,7 +17,7 @@ def handleUpload(foto: UploadFile):
         with open(caminhoPasta, "wb") as arquivo:
             conteudoImagem = foto.file.read()
             arquivo.write(conteudoImagem)
-            return caminhoPasta
+            return nomeArquivo
     except Exception as e:
         raise HTTPException(status_code=500, detail="Erro ao salvar a imagem no servidor.")
     finally:

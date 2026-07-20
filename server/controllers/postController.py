@@ -9,12 +9,9 @@ def getAllPosts(db: Session, offset: int, limit: int):
     posts = db.query(Post).offset(offset).limit(limit).all()
     return posts
 
-def postPosts(db: Session, titulo: str, conteudo: str, usuario_id: int, foto: UploadFile):
-
+def postPosts(db: Session, titulo: str, conteudo: str, usuario_id: str, foto: UploadFile):
+    int(usuario_id)
     fotoEnviada = handleUpload(foto)
-
-    if(fotoEnviada is not str):
-        raise HTTPException(status_code=404, detail="Não foi possível processar a foto.")
 
     newPost = Post(
         titulo=titulo,
@@ -22,7 +19,6 @@ def postPosts(db: Session, titulo: str, conteudo: str, usuario_id: int, foto: Up
         foto=fotoEnviada,
         usuario_id=usuario_id
     )
-
 
     db.add(newPost)
     db.commit()
