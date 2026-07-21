@@ -74,7 +74,7 @@ export default function RegisterForm() {
                                 value={registerData.email}
                                 onChange={handleChange}
                                 placeholder="Digite seu email"
-                                className={`${registerData.email.length === 0 ? ("outline-red-600 ring-3 ring-red-600") : ("ring-2 active:ring-3 focus:outline-[var(--color-tertiary)]")} ring-gray-300 my-2 p-3 rounded-sm`}
+                                className={`${registerData.email.length === 0 ? ("outline-red-600 ring-3 ring-red-600") : ("ring-2 active:ring-3 focus:outline-(--color-tertiary)")} ring-gray-300 my-2 p-3 rounded-sm`}
                                 maxLength={50}
                                 required
                             />
@@ -91,7 +91,7 @@ export default function RegisterForm() {
                                 value={registerData.nome}
                                 onChange={handleChange}
                                 placeholder="Digite seu nome de usuário"
-                                className={`${registerData.nome.length === 0 ? ("outline-red-600 ring-3 ring-red-600") : ("ring-2 active:ring-3 focus:outline-[var(--color-tertiary)]")} ring-gray-300 my-2 p-3 rounded-sm`}
+                                className={`${registerData.nome.length === 0 ? ("outline-red-600 ring-3 ring-red-600") : ("ring-2 active:ring-3 focus:outline-(--color-tertiary)")} ring-gray-300 my-2 p-3 rounded-sm`}
                                 maxLength={20}
                                 required
                             />
@@ -107,7 +107,7 @@ export default function RegisterForm() {
                                 value={registerData.senha}
                                 onChange={handleChange}
                                 placeholder="Crie uma senha"
-                                className={`ring-2 active:ring-3 focus:outline-[var(--color-tertiary)] ring-gray-300 my-2 p-3 rounded-sm`}
+                                className={`ring-2 active:ring-3 focus:outline-(--color-tertiary) ring-gray-300 my-2 p-3 rounded-sm`}
                                 required
                             />
                             <label htmlFor="confirmarSenha" className="font-semibold">Confirmar Senha</label>
@@ -119,7 +119,7 @@ export default function RegisterForm() {
                                 value={registerData.confirmarSenha}
                                 onChange={handleChange}
                                 placeholder="Confirme sua senha"
-                                className={`${alertForm ? ("outline-red-600 ring-3 ring-red-600") : ("ring-2 active:ring-3 focus:outline-[var(--color-tertiary)]")}  ring-gray-300 my-2 p-3 rounded-sm`}
+                                className={`${alertForm ? ("outline-red-600 ring-3 ring-red-600") : ("ring-2 active:ring-3 focus:outline-(--color-tertiary)")}  ring-gray-300 my-2 p-3 rounded-sm`}
                                 required
                             />
                         </div>
