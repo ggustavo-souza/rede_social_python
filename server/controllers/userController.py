@@ -50,6 +50,22 @@ def checarSessao(request: Request):
             detail="Token inválido"
         )
 
+def logOut(request: Request, response: Response): 
+    token = request.cookies.get("token")
+
+    if not token:
+        raise HTTPException(
+            status_code=401,
+            detail="Não é possível fazer logout pois o token nem existe."
+        )
+
+    if token:
+        response.delete_cookie(key="token")
+        return {"message": "O usuário foi deslogado com sucesso!", "success": True}
+    
+
+    
+
 # TODO: Rota de LOGOUT
 
 def handleRegistro(request: UserRegisterModel, session: Session):

@@ -1,10 +1,11 @@
-from fastapi import FastAPI, Request
+from fastapi import FastAPI, Request, Response
 from fastapi.staticfiles import StaticFiles
 from database import BD
 from routes.loginRoutes import router as login_router
 from routes.postsRoutes import router as posts_router
 from fastapi.middleware.cors import CORSMiddleware
-from controllers.userController import checarSessao
+from controllers.userController import checarSessao, logOut
+
 app = FastAPI()
 origins = ["http://localhost:5173"]
 
@@ -30,3 +31,6 @@ app.mount("/public", StaticFiles(directory="public"), name="public")
 def boasVindas(request: Request):
     return checarSessao(request)
 
+@app.get("/logout")
+def logOutUser(request: Request, response: Response):
+    return logOut(request, response)

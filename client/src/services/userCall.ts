@@ -1,7 +1,8 @@
 import { type LoginFormData, type RegistrarFormData } from "../types/FormTypes";
 
+const urlAPI = "http://localhost:8000"
+
 export async function loginCall(dadosLogin: LoginFormData) {
-    const urlAPI = "http://localhost:8000"
 
     try {
         const response = await fetch(`${urlAPI}/login`, {
@@ -30,7 +31,6 @@ export async function loginCall(dadosLogin: LoginFormData) {
 }
 
 export async function registerCall(dadosRegistro: RegistrarFormData) {
-    const urlAPI = "http://localhost:8000"
     const { email, nome, senha } = dadosRegistro
     const dadosParaEnvio = {
         email: email,
@@ -49,11 +49,35 @@ export async function registerCall(dadosRegistro: RegistrarFormData) {
 
         const data = await response.json();
 
-        if (data.success) 
+        if (data.success)
             return true
 
 
         return false
+    } catch (error) {
+        if (error instanceof Error) {
+            console.error(error.message)
+            return false
+        }
+    }
+}
+
+export async function logOutUser() {
+    const userId = localStorage.getItem("usuario_id")
+
+    if (userId !== "")
+        localStorage.removeItem("usuario_id")
+    try {
+        const response = await fetch(`${urlAPI}/logout`, {
+            method: "GET",
+            credentials: "include"
+        })
+
+        const data = await response.json()
+
+        if (data.success)
+            return true
+
     } catch (error) {
         if (error instanceof Error) {
             console.error(error.message)
