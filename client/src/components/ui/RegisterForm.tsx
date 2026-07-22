@@ -1,7 +1,7 @@
 import { useState, type ChangeEvent } from "react"
 import Botao from "../elements/BotaoSubmit"
 import { type RegistrarFormData } from "../../types/FormTypes"
-import { registerCall } from "../../services/formsCall"
+import { registerCall } from "../../services/userCall"
 import ProgressBar from "../elements/ProgressBar"
 import Modal from "../elements/Modal"
 

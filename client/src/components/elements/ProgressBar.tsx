@@ -9,7 +9,7 @@ export default function ProgressBar({ point }: ProgressBarProps) {
             {Array.from({ length: steps }).map((_, index) => (
                 <div 
                     key={index} 
-                    className={`h-2 flex-1 rounded-full transition-colors duration-300 ${index <= point ? 'bg-[var(--color-secondary)]' : 'bg-gray-300'}`}
+                    className={`h-2 flex-1 rounded-full transition-colors duration-300 ${index <= point ? 'bg-(--color-secondary)' : 'bg-gray-300'}`}
                 />
             ))}
         </div>

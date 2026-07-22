@@ -15,7 +15,7 @@ export default function Botao({ texto, type, destino, tamanho, funcao, estilo }:
     return (
         <button
             type={type}
-            className={`${estilo === "inative" ? ("bg-gray-400") : ("animationBotao bg-(--color-secondary) text-(--color-primary)")} px-6 font-semibold py-2 text-${tamanho} w-${tamanho} rounded-sm cursor-pointer`}
+            className={`${estilo === "inative" ? ("bg-gray-400") : ("animationBotao bg-(--color-secondary) text-(--color-primary)")} px-6 font-semibold py-2 text-${tamanho} w-full rounded-sm cursor-pointer`}
             onClick={(e) => {
                 if (type === "button") {
                     e.preventDefault();
