@@ -77,14 +77,13 @@ export default function CreatePost() {
                     <form onSubmit={handleSubmit} className="max-w-xl text-(--color-primary) flex flex-col p-6 gap-4">
                         <div className="flex flex-col gap-2 bg-(--color-tertiary) p-4 rounded-lg">
                             <label htmlFor="titulo">Título do post:</label>
-                            <input onChange={handleChange} type="text" className="rounded-lg p-3" name="titulo" placeholder="Ex: Hoje colhi batatas" />
+                            <input maxLength={30} onChange={handleChange} type="text" className="rounded-lg p-3" name="titulo" placeholder="Ex: Hoje colhi batatas" />
                         </div>
                         <div className="flex flex-col gap-2 p-4 rounded-lg bg-(--color-tertiary)">
                             <label htmlFor="conteudo">Conteúdo do post:</label>
                             <textarea onChange={handleChange} name="conteudo" className="rounded-lg p-3" placeholder="Descreva seu post..."></textarea>
                         </div>
                         <input type="hidden" name="usuario_id" value={formData.usuario_id ?? ""} />
-                        { /* TODO: Fazer o botão de upload customizado */}
                         <div className="flex flex-col gap-2 p-4 rounded-lg bg-(--color-tertiary) mb-4">
                             <label htmlFor="foto">Escolha a imagem do post</label>
                             <input
