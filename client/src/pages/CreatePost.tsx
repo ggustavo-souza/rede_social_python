@@ -72,40 +72,26 @@ export default function CreatePost() {
                 </button>
                 <h1 className="text-2xl font-semibold text-center">Crie seu Post</h1>
             </header>
-            <div className="flex flex-row gap-50 p-6 items-center">
-                <section className="text-center border border-gray-300 shadow-md rounded p-2">
-                    <form onSubmit={handleSubmit} className="max-w-xl text-(--color-primary) flex flex-col p-6 gap-4">
-                        <div className="flex flex-col gap-2 bg-(--color-tertiary) p-4 rounded-lg">
-                            <label htmlFor="titulo">Título do post:</label>
-                            <input maxLength={30} onChange={handleChange} type="text" className="rounded-lg p-3" name="titulo" placeholder="Ex: Hoje colhi batatas" />
-                        </div>
-                        <div className="flex flex-col gap-2 p-4 rounded-lg bg-(--color-tertiary)">
-                            <label htmlFor="conteudo">Conteúdo do post:</label>
-                            <textarea onChange={handleChange} name="conteudo" className="rounded-lg p-3" placeholder="Descreva seu post..."></textarea>
-                        </div>
-                        <input type="hidden" name="usuario_id" value={formData.usuario_id ?? ""} />
-                        <div className="flex flex-col gap-2 p-4 rounded-lg bg-(--color-tertiary) mb-4">
-                            <label htmlFor="foto">Escolha a imagem do post</label>
-                            <input
-                                onChange={handleFileChange}
-                                type="file"
-                                name="foto"
-                                accept="image/*"
-                                className="rounded-lg border"
-                            />
-                        </div>
-
-                        <Botao type="submit" texto="Criar post" tamanho="lg" estilo="solid" />
-                    </form>
-                </section>
-
-                <aside className="flex flex-col border border-gray-300 rounded mb-4 gap-4 p-4 text-center items-center">
-                    <h1>{formData.titulo ? formData.titulo : "Nenhum título definido"}</h1>
+            <div className="flex flex-row gap-50 p-6 items-center justify-center">
+                <form onSubmit={handleSubmit} className="flex flex-col border border-gray-300 rounded mb-4 gap-4 p-4 text-center items-center">
+                    <input name="titulo" id="titulo" className="p-2 w-100" onChange={handleChange} type="text" placeholder="Digite o título do post"></input>
+                    <div className="flex flex-col gap-2 p-4 rounded-lg bg-(--color-primary) mb-4">
+                        <label htmlFor="foto">Escolha a imagem do post</label>
+                        <input
+                            onChange={handleFileChange}
+                            type="file"
+                            name="foto"
+                            accept="image/*"
+                            className="rounded-lg border"
+                        />
+                    </div>
+                    <input name="usuario_id" id="usuario_id" type="hidden" value={formData.usuario_id ?? ""} />
                     {selectedImage ? <img src={selectedImage} alt="Imagem do post" className="max-w-full h-auto rounded-md" width="303" height="303" /> : <img src="/semImagem.png" alt="Imagem do post" className="max-w-full h-auto rounded-md" width="303" height="303" />}
-                    <p className="w-md wrap-break-word">{formData.conteudo ? formData.conteudo : "Nenhum conteúdo definido"}</p>
-                </aside>
+                    <textarea name="conteudo" id='conteudo' onChange={handleChange} placeholder="Escreva a legenda do post" className="w-md wrap-break-word p-2"></textarea>
+                    <Botao type="submit" tamanho="md" texto="Postar" />
+                </form>
             </div>
-            {modal && <Modal titulo="Erro ao criar post" texto="Ocorreu um erro ao criar o post. Por favor, tente novamente." tema="negative" destino="" funcaoFechar={() => setModal(false)} />   }
+            {modal && <Modal titulo="Erro ao criar post" texto="Ocorreu um erro ao criar o post. Por favor, tente novamente." tema="negative" destino="" funcaoFechar={() => setModal(false)} />}
         </main>
     );
 }

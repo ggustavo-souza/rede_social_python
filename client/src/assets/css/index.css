@@ -30,6 +30,7 @@ input:focus, textarea:focus {
 input[type="text"], input[type="password"], input[type="email"], textarea {
     border: 2px solid #f3f4f4;
     border-radius: 0.4rem;
+    resize: none;
 }
 
 input[type="file"]::file-selector-button {
