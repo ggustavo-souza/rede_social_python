@@ -7,6 +7,7 @@ import RegisterPage from "./pages/RegisterPage"
 import { AuthProvider } from "./auth/AuthContext"
 import { ProtectedRoute } from "./auth/ProtectedRoute"
 import CreatePost from "./pages/CreatePost"
+import ProfilePage from "./pages/ProfilePage"
 
 function App() {
 
@@ -23,6 +24,11 @@ function App() {
             <Route path="/create-post" element={
               <ProtectedRoute>
                 <CreatePost />
+              </ProtectedRoute>
+            } />
+            <Route path="/myprofile" element={
+              <ProtectedRoute>
+                <ProfilePage />
               </ProtectedRoute>
             } />
             <Route path="/login" element={<LoginPage />} />
