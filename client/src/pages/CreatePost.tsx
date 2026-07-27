@@ -74,7 +74,7 @@ export default function CreatePost() {
             </header>
             <div className="flex flex-row gap-50 p-6 items-center justify-center">
                 <form onSubmit={handleSubmit} className="flex flex-col border border-gray-300 rounded mb-4 gap-4 p-4 text-center items-center">
-                    <input name="titulo" id="titulo" className="p-2 w-100" onChange={handleChange} type="text" placeholder="Digite o título do post"></input>
+                    <input name="titulo" id="titulo" maxLength={30} className="p-2 w-100" onChange={handleChange} type="text" placeholder="Digite o título do post"></input>
                     <div className="flex flex-col gap-2 p-4 rounded-lg bg-(--color-primary) mb-4">
                         <label htmlFor="foto">Escolha a imagem do post</label>
                         <input

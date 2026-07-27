@@ -14,6 +14,7 @@ export default function PostsScroll({ posts }: { posts: Post[] }) {
                     <p className="font-bold w-1/2">{post.titulo}</p>
                     <img src={`${imagesUrl}${post.foto}`} alt={post.titulo} className="w-1/2 object-cover rounded-lg" />
                     <p className="text-sm w-1/2 text-gray-500">{new Date(post.data).toLocaleDateString()} - {new Date(post.data).toLocaleTimeString()}</p>
+                    <p className="hidden">{post.usuario_id}</p>
                     <p className="text-gray-700 wrap-break-word w-1/2">{post.conteudo}</p>
                 </div>
             )))
