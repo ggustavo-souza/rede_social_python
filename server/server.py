@@ -1,7 +1,7 @@
 from fastapi import FastAPI, Request, Response
 from fastapi.staticfiles import StaticFiles
 from database import BD
-from routes.loginRoutes import router as login_router
+from routes.userRoutes import router as user_router
 from routes.postsRoutes import router as posts_router
 from fastapi.middleware.cors import CORSMiddleware
 from controllers.userController import checarSessao, logOut
@@ -18,7 +18,7 @@ app.add_middleware(
     allow_headers=["*"],            
 )
 
-app.include_router(login_router)
+app.include_router(user_router)
 app.include_router(posts_router)
 
 BD.createBD()

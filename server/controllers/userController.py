@@ -62,11 +62,7 @@ def logOut(request: Request, response: Response):
     if token:
         response.delete_cookie(key="token")
         return {"message": "O usuário foi deslogado com sucesso!", "success": True}
-    
 
-    
-
-# TODO: Rota de LOGOUT
 
 def handleRegistro(request: UserRegisterModel, session: Session):
     senhaEncriptada = encriptarSenha(request.senha)
@@ -74,6 +70,15 @@ def handleRegistro(request: UserRegisterModel, session: Session):
     session.add(novoUsuario)
     session.commit()
     return {"message": "Conta criada com sucesso!", "success": True}
+
+def handleGetUser(db: Session, usuario_id: int):
+    infoUser = db.query(User.id, User.email, User.nome).where(usuario_id == User.id).first()
+
+    if infoUser:
+        return {"id": infoUser.id, "nome": infoUser.nome, "email": infoUser.email}
+
+    return None
+
 
 
 

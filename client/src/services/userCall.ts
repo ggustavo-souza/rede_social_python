@@ -85,3 +85,30 @@ export async function logOutUser() {
         }
     }
 }
+
+export async function fetchUser(usuario_id: number) {
+    try {
+        if (usuario_id === undefined)
+            return null
+
+        const response = await fetch(`${urlAPI}/user?usuario_id=${usuario_id}`, {
+            method: "GET",
+            headers: {
+                "Content-Type": "application/json"
+            }
+        })
+
+        const data = await response.json()
+
+        if (data !== null)
+            return data
+
+        return null
+    } catch (e) {
+        if (e instanceof Error) {
+            console.error(e.message)
+            return null
+        }
+    }
+
+}
