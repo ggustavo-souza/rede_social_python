@@ -26,3 +26,26 @@ export async function getAllPosts(offset: number, limit: number) {
 /* async function createPost(formData: FormData) {
     TODO: Fazer a requisição POST enviando os dados em FormData 
 } */
+
+export async function getUserPosts(usuario_id: number) {
+    try {
+        const response = await fetch(`${apiUrl}/posts?usuario_id=${usuario_id}`, {
+            method: "GET",
+            headers: {
+                "Content-Type": "application/json"
+            }
+        })
+
+        if (response.ok) {
+            const data = await response.json()
+            return data
+        }
+
+        return false
+    } catch (e) {
+        if (e instanceof Error) {
+            console.error(e.message)
+            return null
+        }
+    }
+}

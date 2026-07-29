@@ -2,10 +2,14 @@ import { useEffect, useState } from "react";
 import MenuSidebar from "../components/elements/MenuSidebar";
 import { fetchUser } from "../services/userCall";
 import { type User } from "../types/UserTypes"
+import { type Post } from "../types/PostType"
+import { getUserPosts } from "../services/postsCall";
+import PostsScroll from "../components/ui/PostsScroll";
 
 export default function ProfilePage() {
     const usuario_id = Number(localStorage.getItem("usuario_id"))
     const [userData, setUserData] = useState<User>()
+    const [posts, setPosts] = useState<Post[]>([])
 
     useEffect(() => {
         async function catchUser() {
@@ -16,7 +20,17 @@ export default function ProfilePage() {
 
             return null
         }
+        async function catchUserPosts() {
+            const posts = await getUserPosts(usuario_id)
+
+            if (posts !== null) {
+                setPosts(posts)
+            }
+
+            return null
+        }
         catchUser()
+        catchUserPosts()
     }, [usuario_id])
 
     return (
@@ -33,7 +47,7 @@ export default function ProfilePage() {
                         </div>
                     </header>
                     <section>
-
+                        <PostsScroll posts={posts} />
                     </section>
                 </div>
                 <MenuSidebar />
