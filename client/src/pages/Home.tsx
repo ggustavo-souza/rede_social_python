@@ -74,7 +74,7 @@ export default function Home() {
                 <section className="flex flex-col w-full max-w-2xl mx-auto p-4">
                     {initialLoading && <Loading />}
 
-                    <h2 className="text-center my-6 text-xl">Posts</h2>
+                    <h2 className="text-center my-6 text-xl">Feed</h2>
                     <PostsScroll posts={posts} />
 
                     {hasMore && <div ref={targetRef} className="d-none"></div>}
