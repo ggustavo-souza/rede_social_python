@@ -2,12 +2,21 @@ from fastapi import UploadFile
 from models.post import PostModel
 from sqlalchemy.orm import Session
 from database import Post
-from fastapi import HTTPException, Form
 from services.uploadService import handleUpload
 
 def getAllPosts(db: Session, offset: int, limit: int):
     posts = db.query(Post).offset(offset).limit(limit).all()
     return posts
+
+def getUserPosts(db: Session, offset: int, limit: int, usuario_id: int):
+    posts = db.query(Post)
+
+    if (usuario_id != 0):
+        posts = posts.filter(Post.usuario_id == usuario_id)
+
+    posts = posts.offset(offset).limit(limit)
+
+    return posts.all()
 
 def postPosts(db: Session, titulo: str, conteudo: str, usuario_id: str, foto: UploadFile):
     int(usuario_id)
