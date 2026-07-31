@@ -10,11 +10,11 @@ export function ProtectedRoute({ children }: ProtectedRouteProps) {
     const { authenticated, loading } = useAuth()
 
     if (loading) {
-        return <div>Carregando...</div>
+        return <div></div>
     }
 
     if (!authenticated)
-        return <Modal titulo='Não autorizado' texto='Você não possui autorização para entrar nesta página.' tema='negative' destino='login' />
+        return <Modal titulo='Atenção!' texto='Você precisa estar logado para acessar a Home!' tema='negative' destino='login' />
 
     return <>{children}</>
 }

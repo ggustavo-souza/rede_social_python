@@ -18,7 +18,7 @@ export default function MenuSidebar() {
                 <button className="cursor-pointer hover:transform hover:scale-115" onClick={() => navigate("/create-post")}>
                     <i className="bi bi-plus-square text-2xl text-white font-bold"></i>
                 </button>
-                <button className="cursor-pointer hover:transform hover:scale-115">
+                <button className="cursor-pointer hover:transform hover:scale-115" onClick={() => navigate("/config")}>
                     <i className="bi bi-gear-wide text-2xl text-white font-bold"></i>
                 </button>
                 <button className="cursor-pointer hover:transform hover:scale-115">
@@ -37,8 +37,9 @@ export default function MenuSidebar() {
                         <main className="flex justify-center">
                             <p>Deseja mesmo sair da sua conta?</p>
                         </main>
-                        <div className="mt-6 flex justify-center">
-                            <button className="animationBotao bg-(--color-secondary) text-(--color-primary) px-6 font-semibold py-2 text-md w-sm rounded-sm cursor-pointer" onClick={() => { logOutUser(); navigate("/login") }}>Sim, quero sair</button>
+                        <div className="mt-6 flex mx-auto w-sm gap-2 justify-between">
+                            <button className="animationBotao outline-2 outline-(--color-secondary) text-(--color-secondary) px-6 font-semibold py-2 text-md rounded-sm cursor-pointer" onClick={() => setModal(false)}>Cancelar</button>
+                            <button className="animationBotao bg-(--color-secondary) text-(--color-primary) px-6 font-semibold py-2 w-full text-md rounded-sm cursor-pointer" onClick={() => { logOutUser(); navigate("/login") }}>Sim, quero sair</button>
                         </div>
                     </main>
                 </div>
