@@ -8,6 +8,7 @@ import { AuthProvider } from "./auth/AuthContext"
 import { ProtectedRoute } from "./auth/ProtectedRoute"
 import CreatePost from "./pages/CreatePost"
 import ProfilePage from "./pages/ProfilePage"
+import Config from "./pages/Config"
 
 function App() {
 
@@ -29,6 +30,11 @@ function App() {
             <Route path="/myprofile" element={
               <ProtectedRoute>
                 <ProfilePage />
+              </ProtectedRoute>
+            } />
+            <Route path="/config" element={
+              <ProtectedRoute>
+                <Config />
               </ProtectedRoute>
             } />
             <Route path="/login" element={<LoginPage />} />
