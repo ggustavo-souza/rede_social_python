@@ -5,6 +5,7 @@ import { fetchUser } from "../services/userCall";
 
 export default function Config() {
     const usuario_id = Number(localStorage.getItem("usuario_id"))
+    const [modal, setModal] = useState(false)
     const [userData, setUserData] = useState<User>()
 
     useEffect(() => {
@@ -30,7 +31,7 @@ export default function Config() {
                                 <p className="text-sm">Nome do usuário cadastrado: </p>
                                 <h1 className="text-xl">{userData?.nome} </h1>
                             </div>
-                            <button className="hover:bg-(--color-primary) outline-2 outline-(--color-primary) py-2 px-4 rounded-lg" type="button"><i className="bi text-lg bi-pencil hover:text-black "></i></button>
+                            <button onClick={() => setModal(true)} className="hover:bg-(--color-primary) outline-2 outline-(--color-primary) py-2 px-4 rounded-lg" type="button"><i className="bi text-lg bi-pencil hover:text-black "></i></button>
                         </div>
                         <div className="flex flex-row justify-between">
                             <div>
@@ -46,6 +47,32 @@ export default function Config() {
                     </div>
                 </main>
                 <MenuSidebar />
+                {modal && (
+                    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/25 backdrop-blur-sm">
+                        <div className="bg-(--color-primary) p-6 rounded-lg shadow-lg w-96">
+                            <h2 className="text-xl font-bold mb-4">Editar Nome de usuário</h2>
+                            <input
+                                type="text"
+                                placeholder={`Ex: josesilva123`}
+                                className="w-full p-2 border border-gray-300 rounded mb-4"
+                            />
+                            <div className="flex justify-end">
+                                <button
+                                    onClick={() => setModal(false)}
+                                    className="mr-2 px-4 py-2 text-(--color-secondary) animationBotao outline-2 outline-(--color-secondary) rounded hover:bg-(--color-secondary) hover:text-(--color-primary)"
+                                >
+                                    Cancelar
+                                </button>
+                                <button
+                                    onClick={() => setModal(false)}
+                                    className="px-4 py-2 bg-(--color-secondary) text-white rounded animationBotao"
+                                >
+                                    Salvar
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                )}
             </div>
         </>
     )
