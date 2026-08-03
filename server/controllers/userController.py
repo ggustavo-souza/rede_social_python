@@ -79,6 +79,18 @@ def handleGetUser(db: Session, usuario_id: int):
 
     return None
 
+def handlePatchUserName(db: Session, request):
+    usuario = db.query(User).filter(User.id == request.id).first()
+
+    if not usuario:
+        raise HTTPException(status_code=404, detail="Usuário não encontrado.")
+
+    usuario.nome = request.nome
+    db.commit()
+    db.refresh(usuario)
+
+    return {"message": "Nome de usuário atualizado com sucesso!", "success": True, "usuario": {"id": usuario.id, "nome": usuario.nome, "email": usuario.email}}
+
 
 
 

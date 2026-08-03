@@ -110,5 +110,24 @@ export async function fetchUser(usuario_id: number) {
             return null
         }
     }
+}
 
+export async function updateUser(updatedUserData: { id: number, nome: string }) {
+    try {
+        const response = await fetch(`${urlAPI}/user`, {
+            method: "PATCH",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify(updatedUserData)
+        })
+
+        const data = await response.json()
+        return data
+    } catch (e) {
+        if (e instanceof Error) {
+            console.error(e.message)
+            return null
+        }
+    }
 }

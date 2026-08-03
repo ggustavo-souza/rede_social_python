@@ -1,7 +1,7 @@
 from fastapi import Response
-from models.user import UserLoginModel, UserRegisterModel
+from models.user import UserLoginModel, UserRegisterModel, UserPatchModel
 from fastapi import APIRouter, Depends
-from controllers.userController import handleLogin, handleRegistro, handleGetUser
+from controllers.userController import handleLogin, handleRegistro, handleGetUser, handlePatchUserName
 from sqlalchemy.orm import Session
 from database import get_db
 
@@ -18,3 +18,7 @@ def postRegistrar(request: UserRegisterModel, db: Session = Depends(get_db)):
 @router.get("/user")
 def getUser(db: Session = Depends(get_db), usuario_id: int = 0):
     return handleGetUser(db, usuario_id)
+
+@router.patch("/user")
+def patchUserName(db: Session = Depends(get_db), request: UserPatchModel = None ):
+    return handlePatchUserName(db, request)

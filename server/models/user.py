@@ -9,3 +9,6 @@ class UserRegisterModel(BaseModel):
     email: str = Field(..., min_length=5, max_length=50)
     senha: str = Field(..., min_length=1)
 
+class UserPatchModel(BaseModel):
+    id: int = Field(..., gt=0)
+    nome: str = Field(..., min_length=1, max_length=20)
