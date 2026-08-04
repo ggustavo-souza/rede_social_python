@@ -1,11 +1,11 @@
 from fastapi import UploadFile
 from models.post import PostModel
-from sqlalchemy.orm import Session
-from database import Post
+from sqlalchemy.orm import Session, joinedload
+from database import Post, User
 from services.uploadService import handleUpload
 
 def getAllPosts(db: Session, offset: int, limit: int):
-    posts = db.query(Post).offset(offset).limit(limit).all()
+    posts = db.query(Post).options(joinedload(Post.autor)).order_by(Post.data.desc()).offset(offset).limit(limit).all()
     return posts
 
 def getUserPosts(db: Session, offset: int, limit: int, usuario_id: int):

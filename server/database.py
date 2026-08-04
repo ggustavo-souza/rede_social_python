@@ -1,5 +1,5 @@
 from sqlalchemy import create_engine, Column, Integer, String, DateTime, ForeignKey, func
-from sqlalchemy.orm import DeclarativeBase, sessionmaker
+from sqlalchemy.orm import DeclarativeBase, relationship, sessionmaker
 
 # classe da base declarativa (utilizada pra manipular tabelas)
 class Base(DeclarativeBase):
@@ -13,6 +13,7 @@ class User(Base):
     nome = Column(String(20), nullable=False)
     email = Column(String(50), nullable=False)
     senha = Column(String(255), nullable=False)
+    posts = relationship("Post", back_populates="autor")
 
 class Post(Base):
     __tablename__ = "posts"
@@ -23,6 +24,12 @@ class Post(Base):
     foto = Column(String(255), nullable=True)
     usuario_id = Column(Integer, ForeignKey("users.id"), nullable=False)
     data = Column(DateTime(timezone=True), server_default=func.now())
+    autor = relationship("User", back_populates="posts")
+
+    @property
+    def autor_nome(self):
+        return self.autor.nome if self.autor else ""
+    
 
 class Curtidas(Base):
     __tablename__ = "curtidas"

@@ -4,6 +4,9 @@ export interface Post {
     conteudo: string,
     foto: string,
     usuario_id: number,
+    autor: {
+        nome: string
+    }
     data: string
 }
 
