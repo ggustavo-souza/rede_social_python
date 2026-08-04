@@ -1,7 +1,7 @@
 from fastapi import Response
-from models.user import UserLoginModel, UserRegisterModel, UserPatchModel
+from models.user import UserLoginModel, UserRegisterModel, UserPatchNameModel, UserPatchSenhaModel
 from fastapi import APIRouter, Depends
-from controllers.userController import handleLogin, handleRegistro, handleGetUser, handlePatchUserName
+from controllers.userController import handleLogin, handlePatchUserSenha, handleRegistro, handleGetUser, handlePatchUserName
 from sqlalchemy.orm import Session
 from database import get_db
 
@@ -20,5 +20,9 @@ def getUser(db: Session = Depends(get_db), usuario_id: int = 0):
     return handleGetUser(db, usuario_id)
 
 @router.patch("/user")
-def patchUserName(db: Session = Depends(get_db), request: UserPatchModel = None ):
+def patchUserName(db: Session = Depends(get_db), request: UserPatchNameModel = None ):
     return handlePatchUserName(db, request)
+
+@router.patch("/user/senha")
+def patchUserSenha(db: Session = Depends(get_db), request: UserPatchSenhaModel = None ):
+    return handlePatchUserSenha(db, request)

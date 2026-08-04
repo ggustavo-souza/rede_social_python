@@ -91,6 +91,19 @@ def handlePatchUserName(db: Session, request):
 
     return {"message": "Nome de usuário atualizado com sucesso!", "success": True, "usuario": {"id": usuario.id, "nome": usuario.nome, "email": usuario.email}}
 
+def handlePatchUserSenha(db: Session, request):
+    usuario = db.query(User).filter(User.id == request.id).first()
+
+    if not usuario:
+        raise HTTPException(status_code=404, detail="Usuário não encontrado.")
+
+    senhaEncriptada = encriptarSenha(request.senha)
+    usuario.senha = senhaEncriptada
+    db.commit()
+    db.refresh(usuario)
+
+    return {"message": "Senha de usuário atualizada com sucesso!", "success": True, "usuario": {"id": usuario.id, "nome": usuario.nome, "email": usuario.email}}
+
 
 
 
