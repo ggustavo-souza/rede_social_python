@@ -1,13 +1,17 @@
-import MenuSidebar from "../components/elements/MenuSidebar";
+import MenuSidebar from "../components/ui/MenuSidebar";
 import { type User } from "../types/UserTypes";
 import { useState, useEffect } from "react";
-import { fetchUser, updateUser } from "../services/userCall";
+import { fetchUser, updateUser, logOutUser, updateUserSenha } from "../services/userCall";
+import { useNavigate } from "react-router";
 
 export default function Config() {
     const usuario_id = Number(localStorage.getItem("usuario_id"))
+    const navigate = useNavigate();
     const [modal, setModal] = useState(false)
+    const [modalSenha, setModalSenha] = useState(false)
     const [userData, setUserData] = useState<User>()
     const [userName, setUserName] = useState("")
+    const [novaSenha, setNovaSenha] = useState("")
 
     useEffect(() => {
         async function catchUser() {
@@ -25,6 +29,10 @@ export default function Config() {
         setUserName(event.target.value)
     }
 
+    const handleChangeSenha = (event: React.ChangeEvent<HTMLInputElement>) => {
+        setNovaSenha(event.target.value)
+    }
+
     const handleSubmitUserName = async (e: React.SubmitEvent<HTMLFormElement>) => {
         e.preventDefault();
 
@@ -36,7 +44,20 @@ export default function Config() {
             setUserData({ ...userData, nome: userName } as User);
             setModal(false);
         }
+    }
 
+    const submitRedefinirSenha = async (e: React.SubmitEvent<HTMLFormElement>) => {
+        e.preventDefault();
+
+        const userData = { id: usuario_id, senha: novaSenha };
+
+        const response = await updateUserSenha(userData);
+
+        if (response !== null) {
+            logOutUser();
+            setModalSenha(false);
+            navigate("/login");
+        }
     }
 
     return (
@@ -62,7 +83,7 @@ export default function Config() {
                     <h1 className="text-2xl my-2 border-t-2 pt-4">Configurações de senha</h1>
                     <div className="flex flex-row items-center p-4">
                         <p className="text-xl">Esqueceu sua senha?</p>
-                        <button className="cursor-pointer animationBotao mx-4 px-6 py-2 bg-(--color-primary) rounded-sm text-black">Redefinir Senha</button>
+                        <button onClick={() => setModalSenha(true)} className="cursor-pointer animationBotao mx-4 px-6 py-2 bg-(--color-primary) rounded-sm text-black">Redefinir Senha</button>
                     </div>
                 </main>
                 <MenuSidebar />
@@ -80,6 +101,29 @@ export default function Config() {
                             <div className="flex justify-end">
                                 <button
                                     onClick={() => setModal(false)}
+                                    className="cursor-pointer mr-2 px-4 py-2 text-(--color-secondary) animationBotao outline-2 outline-(--color-secondary) rounded hover:bg-(--color-secondary) hover:text-(--color-primary)"
+                                >
+                                    Cancelar
+                                </button>
+                                <button
+                                    type="submit"
+                                    className="cursor-pointer px-4 py-2 bg-(--color-secondary) text-white rounded animationBotao"
+                                >
+                                    Salvar
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                )}
+                {modalSenha && (
+                    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/25 backdrop-blur-sm">
+                        <form onSubmit={submitRedefinirSenha} className="bg-(--color-primary) p-6 rounded-lg shadow-lg w-96">
+                            <h2 className="text-xl font-bold mb-4">Redefinir Senha</h2>
+                            <p>Após a redefinição, <b>você será desconectado da sua conta.</b></p>
+                            <input type="password" onChange={handleChangeSenha} name="novaSenha" placeholder="Nova senha" className="w-full p-2 border border-gray-300 rounded mb-4" />
+                            <div className="flex justify-end">
+                                <button
+                                    onClick={() => setModalSenha(false)}
                                     className="cursor-pointer mr-2 px-4 py-2 text-(--color-secondary) animationBotao outline-2 outline-(--color-secondary) rounded hover:bg-(--color-secondary) hover:text-(--color-primary)"
                                 >
                                     Cancelar

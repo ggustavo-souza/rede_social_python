@@ -123,7 +123,35 @@ export async function updateUser(updatedUserData: { id: number, nome: string }) 
         })
 
         const data = await response.json()
-        return data
+
+        if (data.success)
+            return data
+
+        return null
+    } catch (e) {
+        if (e instanceof Error) {
+            console.error(e.message)
+            return null
+        }
+    }
+}
+
+export async function updateUserSenha(updatedUserData: { id: number, senha: string }) {
+    try {
+        const response = await fetch(`${urlAPI}/user/senha`, {
+            method: "PATCH",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify(updatedUserData)
+        })
+
+        const data = await response.json()
+
+        if (data.success)
+            return data
+
+        return null
     } catch (e) {
         if (e instanceof Error) {
             console.error(e.message)
