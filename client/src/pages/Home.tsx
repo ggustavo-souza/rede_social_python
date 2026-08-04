@@ -3,7 +3,7 @@ import { getAllPosts } from "../services/postsCall"
 import Loading from "../components/elements/Loading";
 import { type Post } from "../types/PostType"
 import PostsScroll from "../components/ui/PostsScroll";
-import MenuSidebar from "../components/elements/MenuSidebar";
+import MenuSidebar from "../components/ui/MenuSidebar";
 
 export default function Home() {
 

@@ -1,5 +1,5 @@
 import { useEffect, useState, useMemo, useRef } from "react";
-import MenuSidebar from "../components/elements/MenuSidebar";
+import MenuSidebar from "../components/ui/MenuSidebar";
 import { fetchUser } from "../services/userCall";
 import { type User } from "../types/UserTypes"
 import { type Post } from "../types/PostType"
