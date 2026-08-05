@@ -1,5 +1,5 @@
 from fastapi import UploadFile
-from models.post import PostModel
+from models.post import PostModel, PostUpdateModel
 from sqlalchemy.orm import Session, joinedload
 from database import Post, User
 from services.uploadService import handleUpload
@@ -34,13 +34,14 @@ def postPosts(db: Session, titulo: str, conteudo: str, usuario_id: str, foto: Up
     db.refresh(newPost)
     return {"message": "Post criado com sucesso", "post": newPost, "success": True}
 
-def editPost(db: Session, post: PostModel, id: int):
+def editPost(db: Session, post: PostUpdateModel, id: int):
     postToEdit = db.query(Post).filter(Post.id == id).first()
     if not postToEdit:
         return {"message": "Post não encontrado"}
-    postToEdit.titulo = post.titulo
-    postToEdit.conteudo = post.conteudo
-    postToEdit.foto = post.foto
+    if post.titulo is not None:
+        postToEdit.titulo = post.titulo
+    if post.conteudo is not None:
+        postToEdit.conteudo = post.conteudo
     db.commit()
     db.refresh(postToEdit)
     return {"message": "Post editado com sucesso", "post": postToEdit, "success": True}
