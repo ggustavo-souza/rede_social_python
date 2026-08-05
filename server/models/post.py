@@ -1,4 +1,4 @@
-from pydantic import BaseModel, Field, Optional
+from pydantic import BaseModel, Field
 
 class PostModel(BaseModel):
     titulo: str = Field(..., min_length=1)
@@ -8,5 +8,5 @@ class PostModel(BaseModel):
     autor: str = Field(..., min_length=1)
 
 class PostUpdateModel(BaseModel):
-    titulo: Optional[str] = Field(None, min_length=1)
-    conteudo: Optional[str] = Field(None, min_length=1)
+    titulo: str | None = Field(None, min_length=1)
+    conteudo: str | None = Field(None, min_length=1)
