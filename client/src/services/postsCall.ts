@@ -53,7 +53,7 @@ export async function getUserPosts(usuario_id: number, limit: number, offset: nu
 export async function editPost(postId: number, data: { titulo?: string; conteudo?: string }) {
     try {
         const response = await fetch(`${apiUrl}/posts/${postId}`, {
-            method: "PUT",
+            method: "PATCH",
             headers: {
                 "Content-Type": "application/json"
             },
