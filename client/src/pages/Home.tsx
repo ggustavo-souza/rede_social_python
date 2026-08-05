@@ -75,7 +75,7 @@ export default function Home() {
                     {initialLoading && <Loading />}
 
                     <h2 className="text-center my-6 text-xl">Feed</h2>
-                    <PostsScroll posts={posts} />
+                    <PostsScroll posts={posts} screen="home" />
 
                     {hasMore && <div ref={targetRef} className="d-none"></div>}
                     {!hasMore && <p className="text-center">Não há mais posts para carregar.</p>}

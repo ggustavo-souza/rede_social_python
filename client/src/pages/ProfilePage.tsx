@@ -94,7 +94,7 @@ export default function ProfilePage() {
                         </div>
                     </header>
                     <section>
-                        <PostsScroll posts={posts} />
+                        <PostsScroll posts={posts} screen="profile" />
 
                         {hasMore && <div ref={targetRef} className="d-none"></div>}
                         {(!hasMore && posts.length > 0) && <p className="text-center">Não há mais posts para carregar.</p>}

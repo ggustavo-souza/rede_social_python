@@ -49,3 +49,26 @@ export async function getUserPosts(usuario_id: number, limit: number, offset: nu
         }
     }
 }
+
+export async function editPost(postId: number, data: { titulo?: string; conteudo?: string }) {
+    try {
+        const response = await fetch(`${apiUrl}/posts/${postId}`, {
+            method: "PUT",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify(data)
+        })
+
+        const responseData = await response.json()
+        if(responseData.success)
+            return true
+        
+        return null
+    } catch (e) {
+        if (e instanceof Error) {
+            console.error(e.message)
+            return null
+        }
+    }
+}
