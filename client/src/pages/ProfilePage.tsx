@@ -54,18 +54,23 @@ export default function ProfilePage() {
         }
         catchUser()
         catchUserPosts()
-    }, [usuario_id, hasMore, offset])
+    }, [usuario_id, hasMore, offset, posts.length])
 
     const memoizedObserver = useMemo(() => {
         return new IntersectionObserver((entries) => {
             if (entries[0].isIntersecting && !loading && !initialLoading && hasMore) {
-                console.log("Elemento visível na tela!")
                 setOffset(prevOffset => prevOffset + limit)
             }
         })
     }, [loading, initialLoading, hasMore])
 
     const targetRef = useRef<HTMLDivElement>(null)
+
+    const handlePostUpdated = (updatedPost: Post) => {
+        setPosts((prevPosts) =>
+            prevPosts.map((post) => (post.id === updatedPost.id ? updatedPost : post))
+        );
+    };
 
     useEffect(() => {
         const target = targetRef.current
@@ -94,7 +99,7 @@ export default function ProfilePage() {
                         </div>
                     </header>
                     <section>
-                        <PostsScroll posts={posts} screen="profile" />
+                        <PostsScroll posts={posts} screen="profile" handlePostUpdated={handlePostUpdated} />
 
                         {hasMore && <div ref={targetRef} className="d-none"></div>}
                         {(!hasMore && posts.length > 0) && <p className="text-center">Não há mais posts para carregar.</p>}

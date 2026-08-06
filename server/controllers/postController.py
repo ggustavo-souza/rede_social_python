@@ -34,8 +34,8 @@ def postPosts(db: Session, titulo: str, conteudo: str, usuario_id: str, foto: Up
     db.refresh(newPost)
     return {"message": "Post criado com sucesso", "post": newPost, "success": True}
 
-def editPost(db: Session, post: PostUpdateModel, id: int):
-    postToEdit = db.query(Post).filter(Post.id == id).first()
+def editPostContent(db: Session, post: PostUpdateModel, id: int):
+    postToEdit = db.query(Post).options(joinedload(Post.autor)).filter(Post.id == id).first()
     if not postToEdit:
         return {"message": "Post não encontrado"}
     if post.titulo is not None:
@@ -44,6 +44,7 @@ def editPost(db: Session, post: PostUpdateModel, id: int):
         postToEdit.conteudo = post.conteudo
     db.commit()
     db.refresh(postToEdit)
+    
     return {"message": "Post editado com sucesso", "post": postToEdit, "success": True}
 
 def deletePost(db: Session, id: int):

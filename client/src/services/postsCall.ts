@@ -62,9 +62,9 @@ export async function editPost(postId: number, data: { titulo?: string; conteudo
 
         const responseData = await response.json()
         if(responseData.success)
-            return true
-        
-        return null
+            return responseData.post
+        else
+            return null
     } catch (e) {
         if (e instanceof Error) {
             console.error(e.message)

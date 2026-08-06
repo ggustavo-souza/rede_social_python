@@ -1,8 +1,8 @@
 from fastapi import UploadFile
-from controllers.postController import getAllPosts, getUserPosts , postPosts, editPost, deletePost
+from controllers.postController import getAllPosts, getUserPosts , postPosts, editPostContent, deletePost
 from fastapi import APIRouter, Depends, Body, Path, Form, File
 from database import get_db
-from models.post import PostModel, PostUpdateModel
+from models.post import PostUpdateModel
 from sqlalchemy.orm import Session
 
 router = APIRouter()
@@ -19,7 +19,7 @@ def createPosts(db: Session = Depends(get_db), titulo: str = Form(...), conteudo
 
 @router.patch("/posts/{id}")
 def editPost(db: Session = Depends(get_db), post: PostUpdateModel = Body(...), id: int = Path(...)):
-    return editPost(db, post, id)
+    return editPostContent(db, post, id)
 
 @router.delete("/posts/{id}")
 def deletePost(db: Session = Depends(get_db), id: int = Path(...)):
