@@ -30,13 +30,13 @@ export default function PostsScroll({ posts, screen, handlePostUpdated }: PostsS
                             <button onClick={() => { setModal(true); setSelectedPostId(post.id); setField("titulo"); setTypeModal("delete") }} className="border border-gray-300 rounded px-3 py-2 animationBotao cursor-pointer hover:bg-(--color-secondary) text-sm self-end hover:text-(--color-primary) text-gray-500"><i className="bi bi-trash text-xl"></i></button>
                         )}
                         <p className="font-bold w-full">{post.titulo}{screen === "profile" && (
-                            <button onClick={() => { setModal(true); setSelectedPostId(post.id); setField("titulo") }} className="ms-2 border border-gray-300 rounded px-3 py-2 text-sm hover:bg-gray-100 cursor-pointer text-gray-500"><i className="bi bi-pencil text-sm text-gray-600"></i></button>
+                            <button onClick={() => { setModal(true); setSelectedPostId(post.id); setField("titulo"); setTypeModal("edit") }} className="ms-2 border border-gray-300 rounded px-3 py-2 text-sm hover:bg-gray-100 cursor-pointer text-gray-500"><i className="bi bi-pencil text-sm text-gray-600"></i></button>
                         )}</p>
                         <img src={`${imagesUrl}${post.foto}`} alt={post.titulo} className="w-1/2 object-cover rounded-lg" />
                         <p className="text-sm w-1/2 text-gray-500">{new Date(post.data).toLocaleDateString()} - {new Date(post.data).toLocaleTimeString()}</p>
                         <p className="hidden">{post.usuario_id}</p>
                         <p className="text-gray-700 wrap-break-word w-1/2"><b>@{post.autor.nome}: </b>{post.conteudo} {screen === "profile" && (
-                            <button onClick={() => { setModal(true); setSelectedPostId(post.id); setField("conteudo") }} className="ms-2 border border-gray-300 rounded px-3 py-2 text-sm hover:bg-gray-100 cursor-pointer text-gray-500"><i className="bi bi-pencil text-sm text-gray-600"></i></button>
+                            <button onClick={() => { setModal(true); setSelectedPostId(post.id); setField("conteudo"); setTypeModal("edit") }} className="ms-2 border border-gray-300 rounded px-3 py-2 text-sm hover:bg-gray-100 cursor-pointer text-gray-500"><i className="bi bi-pencil text-sm text-gray-600"></i></button>
                         )}</p>
                     </div>
                 ))}
