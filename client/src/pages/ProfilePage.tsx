@@ -66,10 +66,14 @@ export default function ProfilePage() {
 
     const targetRef = useRef<HTMLDivElement>(null)
 
-    const handlePostUpdated = (updatedPost: Post) => {
-        setPosts((prevPosts) =>
-            prevPosts.map((post) => (post.id === updatedPost.id ? updatedPost : post))
-        );
+    const handlePostUpdated = (updatedPost: Post, deleteResponse?: boolean) => {
+        if (deleteResponse) {
+            setPosts((prevPosts) => prevPosts.filter((post) => post.id !== updatedPost.id));
+        } else {
+            setPosts((prevPosts) =>
+                prevPosts.map((post) => (post.id === updatedPost.id ? updatedPost : post))
+            );
+        }
     };
 
     useEffect(() => {

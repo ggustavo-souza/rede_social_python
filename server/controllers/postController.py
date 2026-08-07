@@ -47,10 +47,10 @@ def editPostContent(db: Session, post: PostUpdateModel, id: int):
     
     return {"message": "Post editado com sucesso", "post": postToEdit, "success": True}
 
-def deletePost(db: Session, id: int):
+def deletePostDB(db: Session, id: int):
     postToDelete = db.query(Post).filter(Post.id == id).first()
     if not postToDelete:
         return {"message": "Post não encontrado"}
     db.delete(postToDelete)
     db.commit()
-    return {"message": "Post deletado com sucesso", "success": True}
+    return {"message": "Post deletado com sucesso", "success": True, "post": id}

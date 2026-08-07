@@ -1,14 +1,14 @@
 import { useState } from "react";
-import { editPost } from "../../services/postsCall";
+import { deletePost, editPost } from "../../services/postsCall";
 import type { Post } from "../../types/PostType";
 
 interface PostEditModalProps {
-    field: "titulo" | "conteudo";
+    field: "titulo" | "conteudo" | null;
     currentValue: string;
     postId: number;
     typeModal: "edit" | "delete";
     closeModal: () => void;
-    handlePostUpdated: (updatedPost: Post) => void;
+    handlePostUpdated: (updatedPost: Post, deleteResponse: boolean) => void;
 }
 
 export default function PostEditModal({ field, currentValue, postId, typeModal, closeModal, handlePostUpdated }: PostEditModalProps) {
@@ -19,18 +19,32 @@ export default function PostEditModal({ field, currentValue, postId, typeModal, 
         e.preventDefault();
 
         const data = {
-            [field]: newValue,
+            [field || ""]: newValue,
         };
 
         const updatedPost = await editPost(postId, data);
 
         if (updatedPost != null) {
-            handlePostUpdated(updatedPost);
+            handlePostUpdated(updatedPost, false);
             closeModal();
         } else {
             setError(true);
         }
     }
+
+    const handleDelete = async (e: React.SubmitEvent<HTMLFormElement>) => {
+        e.preventDefault();
+
+        const deleteResponse = await deletePost(postId);
+
+        if (deleteResponse) {
+            handlePostUpdated({ id: deleteResponse.post } as Post, deleteResponse.success);
+            closeModal();
+        } else {
+            setError(true);
+        }
+    }
+
     if (typeModal === "edit") {
         return (
             <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/25 backdrop-blur-sm">
@@ -43,14 +57,14 @@ export default function PostEditModal({ field, currentValue, postId, typeModal, 
                         <div className="flex justify-center">
                             <input
                                 type="text"
-                                name={field}
+                                name={field || ""}
                                 value={newValue}
                                 onChange={(e) => setNewValue(e.target.value)}
                                 className="border border-gray-300 rounded px-3 py-2 w-full"
                             />
                         </div>
                         <div className="mt-6 flex justify-center">
-                            <button type="button" onClick={closeModal} className="">Cancelar</button>
+                            <button type="button" onClick={() => { closeModal(); setNewValue("") }} className="">Cancelar</button>
                             <button type="submit" className="">Salvar</button>
                         </div>
                     </form>
@@ -64,10 +78,11 @@ export default function PostEditModal({ field, currentValue, postId, typeModal, 
                     <header className="flex flex-col mb-4 mx-10 text-center">
                         <h1 className="text-3xl font-bold my-2">Excluir Post</h1>
                     </header>
-                    <form onSubmit={handleSave}>
+                    <form onSubmit={handleDelete}>
                         <p>Deseja mesmo excluir este post?</p>
+                        {error && <p className="text-red-500 text-sm mb-2">Ocorreu um erro ao excluir o post. Tente novamente.</p>}
                         <div className="mt-6 flex justify-center">
-                            <button type="button" onClick={closeModal} className="">Cancelar</button>
+                            <button type="button" onClick={() => { closeModal(); setNewValue("") }} className="">Cancelar</button>
                             <button type="submit" className="">Confirmar</button>
                         </div>
                     </form>

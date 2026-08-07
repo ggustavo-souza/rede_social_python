@@ -72,3 +72,25 @@ export async function editPost(postId: number, data: { titulo?: string; conteudo
         }
     }
 }
+
+export async function deletePost(postId: number) {
+    try {
+        const response = await fetch(`${apiUrl}/posts/${postId}`, {
+            method: "DELETE",
+            headers: {
+                "Content-Type": "application/json"
+            }
+        })
+
+        const responseData = await response.json()
+        if(responseData.success)
+            return responseData
+        else
+            return null
+    } catch (e) {
+        if (e instanceof Error) {
+            console.error(e.message)
+            return null
+        }
+    }
+}
