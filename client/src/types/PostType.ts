@@ -7,6 +7,11 @@ export interface Post {
     autor: {
         nome: string
     }
+    curtidas: {
+        id: number,
+        usuario_id: number,
+        post_id: number
+    }[]
     data: string
 }
 

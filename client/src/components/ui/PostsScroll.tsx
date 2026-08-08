@@ -38,6 +38,17 @@ export default function PostsScroll({ posts, screen, handlePostUpdated }: PostsS
                         <p className="text-gray-700 wrap-break-word w-1/2"><b>@{post.autor.nome}: </b>{post.conteudo} {screen === "profile" && (
                             <button onClick={() => { setModal(true); setSelectedPostId(post.id); setField("conteudo"); setTypeModal("edit") }} className="ms-2 border border-gray-300 rounded px-3 py-2 text-sm hover:bg-gray-100 cursor-pointer text-gray-500"><i className="bi bi-pencil text-sm text-gray-600"></i></button>
                         )}</p>
+                        {screen === "home" && (
+                            <div className="flex flex-row">
+                                <button
+                                    className="flex items-center bg-(--color-secondary) animationBotao p-2 px-4 cursor-pointer text-(--color-primary) rounded-md"
+                                >
+                                    <i className="bi bi-heart me-2"></i>
+                                    <p className="text-(--color-primary) font-bold me-2">{post.curtidas.length}</p>
+                                    Curtir
+                                </button>
+                            </div>
+                        )}
                     </div>
                 ))}
                 {modal &&
