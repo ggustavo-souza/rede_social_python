@@ -12,7 +12,8 @@ O intuito do projeto é arquitetar um sistema minimamente funcional utilizando P
 
 | Biblioteca | Função |
 | ------------- | ------------- |
-| FastAPI  | Sendo base para a API, é utilizada para escutar rotas HTTP e lidar com as requisições.  |
+| FastAPI  | Sendo base para a API, é utilizado para escutar rotas HTTP e lidar com as requisições.  |
+| PyJWT  | Base do sistema de autenticação, é utilizado para gerar e validar tokens de login  |
 | SQLalchemy | ORM utilizada no projeto, é responsável por facilitar as operações no banco de dados.  |
 | Pydantic  | Biblioteca utilizada para criar models e validar dados. |
 
@@ -20,7 +21,7 @@ O frontend (client) será criado utilizando React.js, para maior fluidez e contr
 
 | Biblioteca | Função |
 | ------------- | ------------- |
-| React.js  | Maior fluidez de UI & UX, melhor manipulação do DOM (Virtual DOM) e sistema de roteamento. |
+| React.js  | Maior fluidez de UI & UX, uso do Context API , melhor performance do documento (Virtual DOM) e sistema de roteamento. |
 | TailwindCSS | Facilitador de estilização essencial.  |
 
 ## Arquitetura - Estrutura de Pastas
