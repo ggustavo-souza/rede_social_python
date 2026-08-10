@@ -1,5 +1,5 @@
 from fastapi import UploadFile
-from controllers.postController import getAllPosts, getUserPosts , postPosts, editPostContent, deletePostDB
+from controllers.postController import getAllPosts, getUserPosts , postPosts, editPostContent, deletePostDB, likePost
 from fastapi import APIRouter, Depends, Body, Path, Form, File
 from database import get_db
 from models.post import PostUpdateModel
@@ -24,6 +24,10 @@ def editPost(db: Session = Depends(get_db), post: PostUpdateModel = Body(...), i
 @router.delete("/posts/{id}")
 def deletePost(db: Session = Depends(get_db), id: int = Path(...)):
     return deletePostDB(db, id)
+
+@router.post("/posts/{post_id}/like")
+def like_post(post_id: int = Path(...), userId: int = Body(...), db: Session = Depends(get_db)):
+    return likePost(db, post_id, userId)
 
 
 

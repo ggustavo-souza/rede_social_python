@@ -1,7 +1,8 @@
 import { type Post } from "../../types/PostType";
-import { useState } from "react"
+import { useState, startTransition } from "react"
 import PostEditModal from "../elements/PostEditModal";
 import { useNavigate } from "react-router";
+import { likePost } from "../../services/postsCall";
 
 interface PostsScrollProps {
     posts: Post[];
@@ -11,11 +12,36 @@ interface PostsScrollProps {
 
 export default function PostsScroll({ posts, screen, handlePostUpdated }: PostsScrollProps) {
     const imagesUrl: string = "http://localhost:8000/public/images/"
+    const userId: number = Number(localStorage.getItem("usuario_id"))
     const [modal, setModal] = useState<boolean>(false)
     const [selectedPostId, setSelectedPostId] = useState<number>(0)
     const [field, setField] = useState<"titulo" | "conteudo">("titulo")
     const [typeModal, setTypeModal] = useState<"edit" | "delete">("edit")
     const navigate = useNavigate()
+
+    /* TODO: Implementar a função de curtir post e Optmistic UI para curtidas */
+
+    const [optimisticLikes, setOptimisticLikes] = useState<{ [key: number]: number }>({});
+
+    const handleLike = async (postId: number) => {
+        setOptimisticLikes(prev => ({
+            ...prev,
+            [postId]: (prev[postId] || posts.find(p => p.id === postId)?.curtidas.length || 0) + 1
+        }));
+
+        const response = await likePost(postId, userId);
+
+        if (response != null) {
+            startTransition(() => {
+                handlePostUpdated(response.post);
+            });
+        } else {
+            setOptimisticLikes(prev => ({
+                ...prev,
+                [postId]: (prev[postId] || posts.find(p => p.id === postId)?.curtidas.length || 0) - 1
+            }));
+        }
+    }
 
     return (
         posts.length === 0 ? (
@@ -41,10 +67,13 @@ export default function PostsScroll({ posts, screen, handlePostUpdated }: PostsS
                         {screen === "home" && (
                             <div className="flex flex-row">
                                 <button
+                                    onClick={() => {
+                                        handleLike(post.id);
+                                    }}
                                     className="flex items-center bg-(--color-secondary) animationBotao p-2 px-4 cursor-pointer text-(--color-primary) rounded-md"
                                 >
                                     <i className="bi bi-heart me-2"></i>
-                                    <p className="text-(--color-primary) font-bold me-2">{post.curtidas.length}</p>
+                                    <p className="text-(--color-primary) font-bold me-2">{optimisticLikes[post.id] || post.curtidas.length}</p>
                                     Curtir
                                 </button>
                             </div>

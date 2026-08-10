@@ -94,3 +94,32 @@ export async function deletePost(postId: number) {
         }
     }
 }
+
+export async function likePost(postId: number, userId: number) {
+    try {
+        const response = await fetch(`${apiUrl}/posts/${postId}/like`, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify(userId)
+        })
+ 
+        const responseData = await response.json()
+        
+        if(responseData.success) {
+            const likeResponse = {
+                post: responseData.post,
+                curtiu: responseData.curtiu
+            }
+            return likeResponse
+        }
+        else
+            return null
+    } catch (e) {
+        if (e instanceof Error) {
+            console.log(e.message)
+            return null
+        }
+    }
+}
