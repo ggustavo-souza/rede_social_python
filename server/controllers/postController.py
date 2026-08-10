@@ -1,7 +1,7 @@
 from fastapi import UploadFile
 from models.post import PostUpdateModel
 from sqlalchemy.orm import Session, joinedload
-from database import Post
+from database import Curtidas, Post, User
 from services.uploadService import handleUpload
 
 def getAllPosts(db: Session, offset: int, limit: int):
@@ -54,3 +54,23 @@ def deletePostDB(db: Session, id: int):
     db.delete(postToDelete)
     db.commit()
     return {"message": "Post deletado com sucesso", "success": True, "post": id}
+
+def likePost(db: Session, post_id: int, userId: int):
+    post = db.query(Post).options(joinedload(Post.curtidas)).filter(Post.id == post_id).first()
+    if not post:
+        return {"message": "Post não encontrado", "success": False}
+    
+    if userId in [user.id for user in post.curtidas]:
+        post.curtidas = [user for user in post.curtidas if user.id != userId]
+        post = db.delete(Curtidas).where(Curtidas.usuario_id == userId, Curtidas.post_id == post_id)
+        db.commit()
+        db.refresh(post)
+        return {"message": "Post descurtido com sucesso", "post": post, "success": True, "curtiu": False}
+    else:
+        user = db.query(User.id).filter(User.id == userId).first()
+        if not user:
+            return {"message": "Usuário não encontrado", "success": False}
+        post = db.add(Curtidas(usuario_id=userId, post_id=post_id))
+        db.commit()
+        db.refresh(post)
+        return {"message": "Post curtido com sucesso", "post": post, "success": True, "curtiu": True}
