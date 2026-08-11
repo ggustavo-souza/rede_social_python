@@ -56,21 +56,19 @@ def deletePostDB(db: Session, id: int):
     return {"message": "Post deletado com sucesso", "success": True, "post": id}
 
 def likePost(db: Session, post_id: int, userId: int):
+    # TODO: corrigir o funcionamento da curtida. 
     post = db.query(Post).options(joinedload(Post.curtidas)).filter(Post.id == post_id).first()
     if not post:
         return {"message": "Post não encontrado", "success": False}
     
-    if userId in [user.id for user in post.curtidas]:
-        post.curtidas = [user for user in post.curtidas if user.id != userId]
-        post = db.delete(Curtidas).where(Curtidas.usuario_id == userId, Curtidas.post_id == post_id)
+    existing_like = db.query(Curtidas).filter(Curtidas.post_id == post_id, Curtidas.usuario_id == userId).first()
+    if existing_like:
+        db.delete(existing_like)
         db.commit()
-        db.refresh(post)
-        return {"message": "Post descurtido com sucesso", "post": post, "success": True, "curtiu": False}
-    else:
-        user = db.query(User.id).filter(User.id == userId).first()
-        if not user:
-            return {"message": "Usuário não encontrado", "success": False}
-        post = db.add(Curtidas(usuario_id=userId, post_id=post_id))
-        db.commit()
-        db.refresh(post)
-        return {"message": "Post curtido com sucesso", "post": post, "success": True, "curtiu": True}
+        return {"message": "Curtida removida", "success": True, "curtiu": False} 
+
+    #se nao existir, cria a curtida
+    new_like = Curtidas(usuario_id=userId, post_id=post_id)
+    db.add(new_like)
+    db.commit()
+    return {"message": "Curtida adicionada", "success": True, "curtiu": True}
