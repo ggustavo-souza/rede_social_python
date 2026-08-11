@@ -110,7 +110,7 @@ export async function likePost(postId: number, userId: number) {
         if(responseData.success) {
             const likeResponse = {
                 post: responseData.post,
-                curtiu: responseData.curtiu
+                curtiu: responseData?.curtiu
             }
             return likeResponse
         }

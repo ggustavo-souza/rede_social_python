@@ -35,6 +35,12 @@ export default function PostsScroll({ posts, screen, handlePostUpdated }: PostsS
             startTransition(() => {
                 handlePostUpdated(response.post);
             });
+            if(response.curtiu === false) {
+                setOptimisticLikes(prev => ({
+                    ...prev,
+                    [postId]: (prev[postId] || posts.find(p => p.id === postId)?.curtidas.length || 0) - 2
+                }));
+            }
         } else {
             setOptimisticLikes(prev => ({
                 ...prev,
