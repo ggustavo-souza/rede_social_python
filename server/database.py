@@ -63,15 +63,6 @@ class BD:
     def seedDB(cls):
         session = cls.SessionLocal()
         try:
-            existing_users = session.query(User).first()
-            if existing_users:
-                print("Usuários já existem na tabela. Nenhum usuário será adicionado.")
-                return
-            
-            user1 = User(nome="catatau", email="foxcontryman8@gmail.com", senha="$2b$12$TD.uoiHyFEuQEg0ehWQAjubk9zzaImMIlLvj6mwxq5jQcXiXN5GDq")
-            session.add(user1)
-            session.commit()
-            print("Usuário de exemplo adicionado com sucesso.")
 
             # Verifica se já existem posts na tabela
             existing_posts = session.query(Post).first()
