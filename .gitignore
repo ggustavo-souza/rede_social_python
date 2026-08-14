@@ -1,6 +1,6 @@
 .env
 
-/server/venv
+/.venv
 /server/__pycache__
 */*/__pycache__
 /server/*.db
