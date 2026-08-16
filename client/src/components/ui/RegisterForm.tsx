@@ -10,17 +10,20 @@ export default function RegisterForm() {
     const [registerData, setRegisterData] = useState<RegistrarFormData>({ email: "", nome: "", senha: "", confirmarSenha: "" })
     const [alertForm, setAlertForm] = useState(false)
     const [step, setStep] = useState(0)
-    const [modal, setModal] = useState({ abrir: false, erro: false })
+    const [modal, setModal] = useState({ abrir: false, erro: false, mensagem: "" })
 
     const handleSubmit = async (event: React.SubmitEvent<HTMLFormElement>) => {
         event.preventDefault();
         if (step !== 3) return;
         const success = await registerCall(registerData)
 
-        if (success) {
-            setModal({ abrir: true, erro: false });
-        } else {
-            setModal({ abrir: true, erro: true });
+        if (success.success === true) {
+            setModal({ abrir: true, erro: false, mensagem: "O registro foi feito com sucesso!" });
+        } else if (success.message) {
+            setModal({ abrir: true, erro: true, mensagem: success.message })
+        }
+        else {
+            setModal({ abrir: true, erro: true, mensagem: "Algo ocorreu de forma errada!" });
         }
     }
 
@@ -184,10 +187,10 @@ export default function RegisterForm() {
                     )}
                 </form>
                 {(modal.abrir === true && modal.erro === true) && (
-                    <Modal titulo="Houve um erro no registro!" texto="Tente novamente mais tarde!" tema="negative" funcaoFechar={() => setModal({ abrir: false, erro: false })} />
+                    <Modal titulo="Houve um erro no registro!" texto={modal.mensagem} tema="negative" funcaoFechar={() => setModal({ abrir: false, erro: false, mensagem: "" })} />
                 )}
                 {(modal.abrir === true && modal.erro === false) && (
-                    <Modal titulo="Registro efetuado com sucesso!" texto="Clique para continuar" tema="positive" destino="login" />
+                    <Modal titulo="Registro efetuado com sucesso!" texto={modal.mensagem} tema="positive" destino="login" />
                 )}
             </section>
         </>

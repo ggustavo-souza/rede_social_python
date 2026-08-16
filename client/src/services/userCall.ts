@@ -49,11 +49,11 @@ export async function registerCall(dadosRegistro: RegistrarFormData) {
 
         const data = await response.json();
 
-        if (data.success)
+        if (data.success === false)
+            return data
+        else {
             return true
-
-
-        return false
+        }
     } catch (error) {
         if (error instanceof Error) {
             console.error(error.message)

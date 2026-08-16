@@ -9,7 +9,7 @@ def getAllPosts(db: Session, offset: int, limit: int):
     return posts
 
 def getUserPosts(db: Session, offset: int, limit: int, usuario_id: int):
-    posts = db.query(Post).options(joinedload(Post.autor), joinedload(len(Post.curtidas))).order_by(Post.data.desc())
+    posts = db.query(Post).options(joinedload(Post.autor), joinedload((Post.curtidas))).order_by(Post.data.desc())
     
     if (usuario_id != 0):
         posts = posts.filter(Post.usuario_id == usuario_id)
