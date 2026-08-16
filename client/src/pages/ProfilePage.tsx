@@ -34,6 +34,8 @@ export default function ProfilePage() {
 
                 if (posts.length < limit) {
                     setHasMore(false)
+                } else if (posts.length === 0) {
+                    setHasMore(false)
                 }
 
                 if (offset > 0) {
