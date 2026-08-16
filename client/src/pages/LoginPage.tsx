@@ -7,7 +7,7 @@ export default function LoginPage() {
             <main className="flex flex-row border-3 min-h-screen">
                 <LoginForm />
                 <aside className="bg-(--color-tertiary) flex flex-col min-h-screen p-10 py-30">
-                    <img className="mx-auto" src="/image.png" height="70" width="70"></img>
+                    <img className="mx-auto" src="/image.png" height="100" width="100"></img>
                     <header className="text-(--color-primary) font-semibold text-3xl text-center my-5">
                         <h1>Ainda não possui conta?</h1>
                     </header>

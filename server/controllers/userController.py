@@ -66,6 +66,10 @@ def logOut(request: Request, response: Response):
 
 def handleRegistro(request: UserRegisterModel, session: Session):
     senhaEncriptada = encriptarSenha(request.senha)
+    if(session.query(User).where(User.email == request.email).first() is not None):
+        return {"message": "Já existe um usuário com esse email!", "success": False}
+    if(session.query(User).where(User.nome == request.nome).first() is not None):
+        return {"message": "Já existe um usuário com esse nome!", "success": False}
     novoUsuario = User(nome=request.nome, email=request.email, senha=senhaEncriptada)
     session.add(novoUsuario)
     session.commit()
